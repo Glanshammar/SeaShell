@@ -1,7 +1,7 @@
 #include <map>
 #include <functional>
-#include "functions/global.h"
-#include "functions/foobar.h"
+#include "functions/global.hpp"
+#include "functions/foobar.hpp"
 
 int main() {
     std::map<string, std::function<void(const vector<string>&)>> functionMap;

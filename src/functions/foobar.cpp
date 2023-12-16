@@ -1,5 +1,5 @@
-#include "foobar.h"
-#include "global.h"
+#include "foobar.hpp"
+#include "global.hpp"
 
 void foo(const vector<string>& args) {
     cout << "Executing 'foo' function with " << args.size() << " arguments:" << endl;
