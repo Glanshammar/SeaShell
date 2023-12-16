@@ -3,9 +3,9 @@ project(SeaShell)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(SeaShell "src/main.cpp"
-                        "src/functions/foobar.cpp"
-                        "src/functions/foobar.hpp"
-                        "src/functions/global.hpp")
+add_executable(SeaShell "main.cpp"
+                        "functions/foobar.cpp"
+                        "functions/foobar.hpp"
+                        "functions/global.hpp")
 
 target_link_libraries(SeaShell -static)
