@@ -7,3 +7,5 @@ add_executable(SeaShell "src/main.cpp"
                         "src/functions/foobar.cpp"
                         "src/functions/foobar.hpp"
                         "src/functions/global.hpp")
+
+target_link_libraries(SeaShell -static)
