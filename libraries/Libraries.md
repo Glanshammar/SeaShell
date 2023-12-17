@@ -10,7 +10,7 @@
     - [Link to YAML-CPP repository](https://github.com/jbeder/yaml-cpp)
     - Used for reading YAML files.
     - Version: 0.8.0
-    - License: [Link to your_project_directory/libraries/YAML-CPP/LICENSE.txt]
+    - License: [SeaShell/libraries/yaml-cpp/LICENSE]
 
 - **FreeRDP** (Apache 2.0)
     - [Link to FreeRDP repository](https://github.com/FreeRDP/FreeRDP)
