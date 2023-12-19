@@ -1,12 +1,10 @@
 #include <map>
 #include <functional>
-#include "functions/global.hpp"
-#include "functions/foobar.hpp"
+#include "global.hpp"
 
 int main() {
+
     std::map<string, std::function<void(const vector<string>&)>> functionMap;
-    functionMap["foo"] = foo;
-    functionMap["bar"] = bar;
 
     string input;
 
