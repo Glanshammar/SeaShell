@@ -1,17 +1,7 @@
 [
   {
-    "date": "2023-12-15",
-    "time": "08:30:44",
-    "command": "ls -l"
-  },
-  {
-    "date": "2023-12-15",
-    "time": "09:25:12",
-    "command": "cd documents"
-  },
-  {
-    "date": "2023-12-15",
-    "time": "11:45:23",
-    "command": "mkdir new_folder"
+    "date": "666-04-20",
+    "time": "13:37:69",
+    "command": "hello world"
   }
 ]
