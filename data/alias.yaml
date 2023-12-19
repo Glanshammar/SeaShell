@@ -1,3 +1,8 @@
+default_alias:
+  home: /root/home
+  downloads: /root/home/downloads
+  dl: /root/home/downloads
+  newdir:
+  nd:
+
 alias:
-  newdir: /root/home
-  nd: /root/home
