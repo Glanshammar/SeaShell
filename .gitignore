@@ -38,6 +38,8 @@ cmake-build-release
 /libraries/openssl/
 /libraries/freerdp/
 /libraries/yaml-cpp/
+/libraries/boost/
 !/libraries/openssl/LICENSE.txt
 !/libraries/yaml-cpp/LICENSE
 !/libraries/freerdp/LICENSE
+!/libraries/boost/LICENSE_1_0.txt
