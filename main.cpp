@@ -1,10 +1,12 @@
 #include <map>
 #include <functional>
 #include "global.hpp"
+#include "functions.hpp"
 
 int main() {
 
-    std::map<string, std::function<void(const vector<string>&)>> functionMap;
+    std::map<string, std::function<void(const vector<string>&, const vector<string>& options)>> functionMap;
+    functionMap["exec"] = ExecuteFile;
 
     string input;
 
@@ -37,8 +39,24 @@ int main() {
         string command = tokens[0];
         tokens.erase(tokens.begin());
 
+        // Check for options (assuming options start with '--')
+        vector<string> options;
+        for (auto it = tokens.begin(); it != tokens.end();) {
+            if ((*it)[0] == '-') {
+                options.push_back(*it);
+                it = tokens.erase(it);
+            } else {
+                ++it;
+            }
+        }
+
+        for (auto item: options) {
+            cout << "Option: " << item << endl;
+        }
+
+        
         if (functionMap.contains(command)) {
-            functionMap[command](tokens);
+            functionMap[command](tokens, options);
         } else {
             cout << "Unknown command: " << command << endl;
         }
@@ -46,3 +64,4 @@ int main() {
 
     return 0;
 }
+
