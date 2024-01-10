@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.27)
-project(SeaShell)
+project("SeaShell" VERSION 1.1)
 
 set(CMAKE_CXX_STANDARD 20)
-
 
 include_directories(
         "C:/C++/boost_1_84_0/"
@@ -10,6 +9,10 @@ include_directories(
         "C:/C++/freerdp-3.0.0/include/"
         "C:/C++/openssl-3.2.0/include/"
         "C:/C++/yaml-cpp-0.8.0/include/")
+
+link_directories(
+        "C:/C++/boost_1_84_0/libs"
+)
 
 add_executable(SeaShell
         "main.cpp"
@@ -19,4 +22,5 @@ add_executable(SeaShell
         "functions/files/execute.hpp")
 
 target_link_libraries(SeaShell
-        -static)
+        -static
+        Ws2_32.lib)
