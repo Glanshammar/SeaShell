@@ -4,7 +4,7 @@ ___
 # High Priority
 * Parse input and execute functions **(X)**
 * Using up & down arrows for going through past commands
-* YAML functions
+* YAML
 * SSH Client & Server
   * Self-updater
 * General Commands
