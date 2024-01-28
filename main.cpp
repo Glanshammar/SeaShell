@@ -1,12 +1,14 @@
 #include <map>
 #include <functional>
 #include "global.hpp"
-#include "functions.hpp"
+#include "functions client/functions.hpp"
+#include "functions client/networking/client.hpp"
 
 int main() {
 
-    std::map<string, std::function<void(const vector<string>&, const vector<string>& options)>> functionMap;
+    std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap;
     functionMap["exec"] = ExecuteFile;
+    functionMap["connect"] = ConnectToServer;
 
     string input;
 
@@ -39,7 +41,6 @@ int main() {
         string command = tokens[0];
         tokens.erase(tokens.begin());
 
-        // Check for options (assuming options start with '--')
         vector<string> options;
         for (auto it = tokens.begin(); it != tokens.end();) {
             if ((*it)[0] == '-') {
@@ -50,7 +51,7 @@ int main() {
             }
         }
 
-        for (auto item: options) {
+        for (const auto& item: options) {
             cout << "Option: " << item << endl;
         }
 
