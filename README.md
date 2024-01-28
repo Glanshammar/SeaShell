@@ -12,14 +12,14 @@ SeaShell is a cutting-edge, cross-platform CLI program designed to revolutionize
 * **Flexibility:** Craft powerful scripts with simplicity and ease.
 * **Accessibility:** Suitable for beginners and seasoned developers alike.
 
-# Contributing
-I welcome contributions! To contribute to SeaShell, follow these steps:
+# Build Instructions
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `make` to build the project.
+4. Run `./seashell` to launch the shell.
 
-1. Fork or clone the repository.
-2. Create your feature branch (git checkout -b feature/AmazingFeature).
-3. Commit your changes (git commit -m 'Add some amazing feature').
-4. Push to the branch (git push origin feature/AmazingFeature).
-5. Open a pull request.
+Configuration:
+Jetbrains CLion default settings and compiler.
 
 # License
 Distributed under the MIT License. See LICENSE for more information.
