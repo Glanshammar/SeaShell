@@ -2,6 +2,6 @@
 #define FUNCTIONS_HPP
 
 //Includes all the headers of in the /functions directory.
-#include "functions/files/execute.hpp"
+#include "files/execute.hpp"
 
 #endif //FUNCTIONS_HPP
