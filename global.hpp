@@ -4,6 +4,10 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <winsock2.h>
+#include <windows.h>
+#include <map>
+
 
 using std::string;
 using std::vector;
