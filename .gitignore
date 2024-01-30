@@ -11,7 +11,7 @@
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
+# Compiled Dynamic Libraries
 *.so
 *.dylib
 *.dll
@@ -20,7 +20,7 @@
 *.mod
 *.smod
 
-# Compiled Static libraries
+# Compiled Static Libraries
 *.lai
 *.la
 *.a
@@ -35,11 +35,3 @@
 cmake-build-debug
 cmake-build-release
 .idea
-/libraries/openssl/
-/libraries/freerdp/
-/libraries/yaml-cpp/
-/libraries/boost/
-!/libraries/openssl/LICENSE.txt
-!/libraries/yaml-cpp/LICENSE
-!/libraries/freerdp/LICENSE
-!/libraries/boost/LICENSE_1_0.txt
