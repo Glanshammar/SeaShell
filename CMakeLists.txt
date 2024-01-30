@@ -9,6 +9,7 @@ include_directories(
         "C:/C++/openssl-3.2.0/include/"
         "C:/C++/libssh2-1.11.0/include/"
         "C:/C++/cryptopp890/"
+        "C:/C++/curl-8.5.0/include/"
         "C:/C++/yaml-cpp-0.8.0/include/")
 
 link_directories(
