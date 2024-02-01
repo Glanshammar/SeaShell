@@ -17,21 +17,26 @@ link_directories(
 )
 
 add_executable(SeaShell
-        "main.cpp"
         "global.hpp"
-        "functions client/functions.hpp"
-        "functions client/files/execute.cpp"
-        "functions client/files/execute.hpp"
-        "functions client/networking/client.cpp"
-        "functions client/networking/client.hpp")
+        "SeaShell/seashell.cpp"
+        "SeaShell/functions.hpp"
+        "SeaShell/files/execute.cpp"
+        "SeaShell/files/execute.hpp"
+        "SeaShell/networking/client.cpp"
+        "SeaShell/networking/client.hpp")
 
 add_executable(SeaServer
-        "functions server/server.cpp"
-        "functions server/helloworld.cpp"
-        "functions server/helloworld.hpp"
-        "functions server/networking/sendtoclient.cpp"
-        "functions server/networking/sendtoclient.hpp"
-        "functions server/functions.hpp")
+        "global.hpp"
+        "SeaShell Server/functions.hpp"
+        "SeaShell Server/server.cpp"
+        "SeaShell Server/helloworld.cpp"
+        "SeaShell Server/helloworld.hpp"
+        "SeaShell Server/networking/sendtoclient.cpp"
+        "SeaShell Server/networking/sendtoclient.hpp")
+
+add_executable(SeaInstaller
+        "global.hpp"
+        "SeaShell/installer.cpp")
 
 target_link_libraries(SeaShell
         -static
@@ -41,3 +46,6 @@ target_link_libraries(SeaServer
         -static
         Ws2_32.lib
         iphlpapi.lib)
+
+target_link_libraries(SeaInstaller
+        -static)
