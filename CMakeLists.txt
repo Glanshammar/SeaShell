@@ -27,12 +27,12 @@ add_executable(SeaShell
 
 add_executable(SeaServer
         "global.hpp"
-        "SeaShell Server/functions.hpp"
-        "SeaShell Server/server.cpp"
-        "SeaShell Server/helloworld.cpp"
-        "SeaShell Server/helloworld.hpp"
-        "SeaShell Server/networking/sendtoclient.cpp"
-        "SeaShell Server/networking/sendtoclient.hpp")
+        "SeaServer/functions.hpp"
+        "SeaServer/server.cpp"
+        "SeaServer/helloworld.cpp"
+        "SeaServer/helloworld.hpp"
+        "SeaServer/networking/sendtoclient.cpp"
+        "SeaServer/networking/sendtoclient.hpp")
 
 add_executable(SeaInstaller
         "global.hpp"
