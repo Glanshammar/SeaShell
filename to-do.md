@@ -3,9 +3,8 @@
 ___
 # High Priority
 * Parse input and execute functions **(X)**
-* Using up & down arrows for going through past commands
 * YAML
-* SSH Client & Server
+* Socket communication (Client/Server)
   * Self-updater
 * General Commands
   * ls
@@ -23,12 +22,13 @@ ___
   * sudo
   * curl
   * history
-  * comp ***tar/zip*** ***directory/files*** (Compress directory or files to .tar.gz or .zip)
 
 # Medium Priority
 * Aliases
 * Tab completion
 * RDP Support
+* Commands
+  * comp ***tar/zip*** ***directory/files*** (Compress directory or files to .tar.gz or .zip)
 
 # Low Priority
 * Scripting functionality
