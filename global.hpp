@@ -7,6 +7,9 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <map>
+#include <thread>
+#include <chrono>
+#include <csignal>
 
 
 using std::string;
