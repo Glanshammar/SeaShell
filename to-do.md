@@ -2,39 +2,46 @@
 **This file is your go-to guide for staying organized and on top of your tasks. Items here are categorized based on their priority: high, medium, and low. Keep track of your progress by marking completed tasks with an (X).**
 ___
 # High Priority
-* Parse input and execute functions **(X)**
-* YAML
-* Socket communication (Client/Server)
-  * Self-updater
-* General Commands
-  * ls
-  * Run files ('exec' or 'run' + ***filepath***)
-  * 'touch' command (Creates file)
-  * 'mkdir' command (Creates directory)
-  * cd
-  * pwd
-  * rm (Remove existing directory or files)
-  * cp (Copy existing directory or files)
-  * rename
-  * cat
-  * echo
-  * chmod
-  * sudo
-  * curl
-  * history
+1. Socket communication (Client/Server)
+2. Parse input and execute functions
+3. Self-updater
+4. General Commands (*)
 
 # Medium Priority
-* Aliases
+1. Installer
+2. YAML
+3. Aliases
+4. RDP Support
+5. Compression (zip, tar, etc.)
+
 * Tab completion
-* RDP Support
-* Commands
-  * comp ***tar/zip*** ***directory/files*** (Compress directory or files to .tar.gz or .zip)
 
 # Low Priority
-* Scripting functionality
+1. Scripting functionality (**)
+2. IDE
+
+
+# General Commands (*)
+  * cd ***directory*** (Change directory)
+  * ls (List directory contents)
+  * pwd (Print working directory)
+  * mkdir ***directory*** (Make directory)
+  * rm ***file*** (Remove file)
+  * rmdir ***directory*** (Remove directory)
+  * mv ***file*** ***directory*** (Move file to directory)
+  * cp ***file*** ***directory*** (Copy file to directory)
+  * cat ***file*** (Print file contents)
+  * chmod ***file*** ***permissions*** (Change file permissions)
+  * chown ***file*** ***user*** (Change file owner)
+  * chgrp ***file*** ***group*** (Change file group)
+  * touch ***file*** (Create file)
+  * clear (Clear screen)
+  * exit (Exit shell)
+  * help
+
+# Scripting (**)
   * Variables
   * Conditions
   * Loops
   * Error handling
-  * Calling functions
-* IDE
+  * Functions
