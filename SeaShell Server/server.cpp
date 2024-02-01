@@ -1,11 +1,11 @@
 #include "../global.hpp"
 #include "functions.hpp"
 #include <unistd.h>
-#include <winsock2.h>
 #include <ws2ipdef.h>
 #include <ws2tcpip.h>
 #include <iphlpapi.h>
 #include <functional>
+#include <atomic>
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "iphlpapi.lib")
@@ -15,22 +15,52 @@ using CommandHandler = std::function<void(SOCKET)>;
 std::map<std::string, CommandHandler> commandHandlers = {
     {"hello", HelloWorld},
     {"custom", CustomCommand},
-    {"another", AnotherCommand}
+    {"another", AnotherCommand},
 };
 
-void HandleCommand(const char* command, SOCKET clientSocket) {
-    // Find the command in the map
-    auto it = commandHandlers.find(command);
+void HandleCommand(const char* command, const SOCKET clientSocket) {
+    const auto it = commandHandlers.find(command);
 
     if (it != commandHandlers.end()) {
-        // Execute the corresponding function
         it->second(clientSocket);
     } else {
         std::cout << "Unknown command: " << command << std::endl;
     }
 }
 
+std::atomic<bool> running(true);
+
+void HandleClient(SOCKET clientSocket) {
+    char buffer[1024];
+
+    while (running.load(std::memory_order_acquire)) {
+        int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+
+        if (bytesRead > 0) {
+            buffer[bytesRead] = '\0'; // Null-terminate the received data
+            std::cout << "From client: " << buffer << std::endl;
+
+            if (strcmp(buffer, "exit") == 0) {
+                std::cout << "Client requested to exit. Closing connection." << std::endl;
+                break;
+            }
+
+            HandleCommand(buffer, clientSocket);
+        } else if (bytesRead == 0) {
+            std::cout << "Connection closed by the client." << std::endl;
+            break;
+        } else {
+            std::cerr << "Error receiving data from client or it disconnected." << std::endl;
+            break;
+        }
+    }
+
+    closesocket(clientSocket);
+}
+
+
 int main() {
+    // FreeConsole();
     // Initialize Winsock
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -47,11 +77,10 @@ int main() {
     }
 
     // Set up server address structure
-    const std::string port = "8080";
     sockaddr_in6 serverAddress{};
     serverAddress.sin6_family = AF_INET6;
     serverAddress.sin6_addr = in6addr_any;
-    serverAddress.sin6_port = htons(std::stoi(port));
+    serverAddress.sin6_port = htons(8080); // You can change the port as needed
 
     // Bind the socket
     if (bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR) {
@@ -69,14 +98,14 @@ int main() {
         return 1;
     }
 
-    std::cout << "Server is listening on port " << port << std::endl;
 
-    while (true) {
-        bool running = true;
-        // Accept incoming connections
+    std::cout << "Server is listening for connections on port 8080..." << std::endl;
+
+    while (running.load()) {
+        // Accept a client connection
         SOCKET clientSocket = accept(serverSocket, nullptr, nullptr);
         if (clientSocket == INVALID_SOCKET) {
-            std::cerr << "Error accepting connection" << std::endl;
+            std::cerr << "Error accepting client connection" << std::endl;
             closesocket(serverSocket);
             WSACleanup();
             return 1;
@@ -84,22 +113,13 @@ int main() {
 
         std::cout << "Client connected." << std::endl;
 
-        // Receive data from the client
-        char buffer[1024];
-        int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-        if (bytesRead > 0) {
-            buffer[bytesRead] = '\0'; // Null-terminate the received data
-            std::cout << "Received data from client: " << buffer << std::endl;
+        // Handle the client in a separate thread
+        std::thread(HandleClient, clientSocket).detach();
+    }
 
-            // Handle the command
-            HandleCommand(buffer, clientSocket);
-        } else {
-            std::cerr << "Error receiving data from client" << std::endl;
-        }
-
-        closesocket(clientSocket);
-        closesocket(serverSocket);
-        WSACleanup();
+    // Clean up
+    closesocket(serverSocket);
+    WSACleanup();
 
     return 0;
 }
