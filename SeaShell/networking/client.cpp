@@ -4,11 +4,19 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
+bool running = true;
+
 
 void ConnectToServer(const std::vector<std::string>& args, const std::vector<std::string>& options) {
 
-    const std::string serverIP = args.empty() ? "fd16:1302:4dc4:3a78:dece:49db:6795:3fd8" : args[0];
+    const std::string serverIP = args.empty() ? "::1" : args[0];
     const std::string serverPort = (args.size() == 2) ? args[1] : "8080";
+    string serverName;
+    if (serverIP == "::1") {
+        serverName = "localhost";
+    } else {
+        serverName = serverIP;
+    }
 
     // Initialize Winsock
     WSADATA wsaData;
@@ -48,30 +56,43 @@ void ConnectToServer(const std::vector<std::string>& args, const std::vector<std
     }
 
     std::cout << "Connected to the server." << std::endl;
-    std::string command;
-    std::cout << ">> ";
-    std::getline(std::cin, command);
 
-    if (send(clientSocket, command.c_str(), command.size(), 0) == SOCKET_ERROR) {
-        std::cerr << "Error sending command" << std::endl;
-        closesocket(clientSocket);
-        WSACleanup();
-        return;
-    }
-
-    // Receive and print the server's response (if any)
     char buffer[1024];
-    int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-    if (bytesRead > 0) {
-        buffer[bytesRead] = '\0'; // Null-terminate the received data
-        std::cout << "Server response: " << buffer << std::endl;
-    } else if (bytesRead == 0) {
-        std::cout << "Connection closed by the server" << std::endl;
-    } else {
-        std::cerr << "Error receiving data" << std::endl;
+    std::string command;
+
+    while(true)
+    {
+        std::cout << "@" << serverName << " >> ";
+        std::getline(std::cin, command);
+
+        if (send(clientSocket, command.c_str(), command.size(), 0) == SOCKET_ERROR) {
+            std::cerr << "Error sending command" << std::endl;
+            return;
+        }
+
+        if (command == "exit") {
+            running = false;
+            break;
+        }
+
+        int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+
+        if (bytesRead > 0) {
+            buffer[bytesRead] = '\0'; // Null-terminate the received Data
+            std::cout << "Server response: " << buffer << std::endl;
+        } else if (bytesRead == 0) {
+            std::cout << "Connection closed by the server." << std::endl;
+            running = false;
+            return;
+        } else {
+            std::cerr << "Error receiving Data" << std::endl;
+            return;
+        }
+
+        command.clear();
     }
 
-    // Close the socket and clean up
+
     closesocket(clientSocket);
     WSACleanup();
 }
