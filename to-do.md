@@ -13,8 +13,7 @@ ___
 3. Aliases
 4. RDP Support
 5. Compression (zip, tar, etc.)
-
-* Tab completion
+6. Tab completion
 
 # Low Priority
 1. Scripting functionality (**)
