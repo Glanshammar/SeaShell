@@ -1,10 +1,17 @@
 #include <map>
 #include <functional>
-#include "global.hpp"
-#include "functions client/functions.hpp"
-#include "functions client/networking/client.hpp"
+#include "../global.hpp"
+#include "functions.hpp"
+#include "networking/client.hpp"
+
 
 int main() {
+
+    SetConsoleTitle(TEXT("SeaShell"));
+
+    HWND hwnd = GetConsoleWindow();  // Assuming you are working with a console window
+    auto hIcon = (HICON)LoadImage(NULL, "C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
+    SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
     std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap;
     functionMap["exec"] = ExecuteFile;
@@ -13,7 +20,7 @@ int main() {
     string input;
 
     while (true) {
-        cout << ">> ";
+        cout << ">> " << std::flush;
         std::getline(std::cin, input);
 
         if(input == "exit") {
@@ -63,5 +70,6 @@ int main() {
         }
     }
 
+    DestroyIcon(hIcon);
     return 0;
 }
