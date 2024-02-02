@@ -2,18 +2,17 @@
 **This file is your go-to guide for staying organized and on top of your tasks. Items here are categorized based on their priority: high, medium, and low. Keep track of your progress by marking completed tasks with an (X).**
 ___
 # High Priority
-1. Socket communication (Client/Server)
-2. Parse input and execute functions
-3. Self-updater
+1. Socket communication (Client/Server) - Done
+2. Parse input and execute functions - Done
+3. Installer/Updater - Working on it
 4. General Commands (*)
 
 # Medium Priority
-1. Installer
-2. YAML
-3. Aliases
-4. RDP Support
-5. Compression (zip, tar, etc.)
-6. Tab completion
+1. YAML 
+2. Aliases
+3. RDP Support
+4. Compression (zip, tar, etc.)
+5. Tab completion
 
 # Low Priority
 1. Scripting functionality (**)
