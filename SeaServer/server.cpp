@@ -25,6 +25,7 @@ void HandleCommand(const char* command, const SOCKET clientSocket) {
         it->second(clientSocket);
     } else {
         std::cout << "Unknown command: " << command << std::endl;
+        ClientPrint(clientSocket, "Unknown command.");
     }
 }
 
