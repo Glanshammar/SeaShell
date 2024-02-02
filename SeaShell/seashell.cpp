@@ -5,6 +5,10 @@
 #include "networking/client.hpp"
 
 
+void ClearConsole(const vector<string>& args, const vector<string>& options) {
+    system("cls");
+}
+
 int main() {
 
     SetConsoleTitle(TEXT("SeaShell"));
@@ -13,9 +17,11 @@ int main() {
     auto hIcon = (HICON)LoadImage(NULL, "C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
-    std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap;
-    functionMap["exec"] = ExecuteFile;
-    functionMap["connect"] = ConnectToServer;
+    std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
+        {"exec", ExecuteFile},
+        {"connect", ConnectToServer},
+        {"clear", ClearConsole},
+    };
 
     string input;
 
