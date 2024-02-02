@@ -61,7 +61,6 @@ void HandleClient(SOCKET clientSocket) {
 
 
 int main() {
-    // FreeConsole();
     // Initialize Winsock
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -114,11 +113,9 @@ int main() {
 
         std::cout << "Client connected." << std::endl;
 
-        // Handle the client in a separate thread
         std::thread(HandleClient, clientSocket).detach();
     }
 
-    // Clean up
     closesocket(serverSocket);
     WSACleanup();
 
