@@ -4,8 +4,6 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-bool running = true;
-
 
 void ConnectToServer(const std::vector<std::string>& args, const std::vector<std::string>& options) {
 
@@ -65,13 +63,16 @@ void ConnectToServer(const std::vector<std::string>& args, const std::vector<std
         std::cout << "@" << serverName << " >> ";
         std::getline(std::cin, command);
 
+        if (command.empty()) {
+            continue;
+        }
+
         if (send(clientSocket, command.c_str(), command.size(), 0) == SOCKET_ERROR) {
             std::cerr << "Error sending command" << std::endl;
             return;
         }
 
         if (command == "exit") {
-            running = false;
             break;
         }
 
@@ -82,11 +83,10 @@ void ConnectToServer(const std::vector<std::string>& args, const std::vector<std
             std::cout << "Server response: " << buffer << std::endl;
         } else if (bytesRead == 0) {
             std::cout << "Connection closed by the server." << std::endl;
-            running = false;
-            return;
+            break;
         } else {
             std::cerr << "Error receiving Data" << std::endl;
-            return;
+            break;
         }
 
         command.clear();
