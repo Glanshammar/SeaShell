@@ -76,17 +76,24 @@ void ConnectToServer(const std::vector<std::string>& args, const std::vector<std
             break;
         }
 
-        int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+        while (true) {
+            int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
 
-        if (bytesRead > 0) {
-            buffer[bytesRead] = '\0'; // Null-terminate the received Data
-            std::cout << "Server response: " << buffer << std::endl;
-        } else if (bytesRead == 0) {
-            std::cout << "Connection closed by the server." << std::endl;
-            break;
-        } else {
-            std::cerr << "Error receiving Data" << std::endl;
-            break;
+            if (bytesRead > 0) {
+                buffer[bytesRead] = '\0'; // Null-terminate the received Data
+                std::cout << "Server response: " << buffer << std::endl;
+            } else if (bytesRead == 0) {
+                std::cout << "Connection closed by the server." << std::endl;
+                break;  // Exit the inner loop if the server closed the connection
+            } else {
+                std::cerr << "Error receiving data" << std::endl;
+                break;  // Exit the inner loop on error
+            }
+
+            // Check for the end of communication based on your protocol
+            if (strcmp(buffer, "END_OF_COMMUNICATION") == 0) {
+                break;  // Exit the inner loop if the server signals the end
+            }
         }
 
         command.clear();
