@@ -32,8 +32,8 @@ add_executable(SeaServer
         "SeaServer/server.cpp"
         "SeaServer/helloworld.cpp"
         "SeaServer/helloworld.hpp"
-        "SeaServer/networking/clientprint.cpp"
-        "SeaServer/networking/clientprint.hpp")
+        "SeaServer/networking/clientsend.cpp"
+        "SeaServer/networking/clientsend.hpp")
 
 add_executable(SeaInstaller
         "global.hpp"
