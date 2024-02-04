@@ -3,7 +3,7 @@
 
 
 void HelloWorld(const SOCKET clientSocket) {
-    SendToClient(clientSocket, "Hello from server!");
-    SendToClient(clientSocket, "Hello from server!");
-    SendToClient(clientSocket, "Hello from server!");
+    SendClient(clientSocket, "Hello from server!");
+    SendClient(clientSocket, "Hello from server!");
+    SendClient(clientSocket, "Hello from server!");
 }

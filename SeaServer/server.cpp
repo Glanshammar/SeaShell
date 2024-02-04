@@ -23,10 +23,10 @@ void HandleCommand(const char* command, const SOCKET clientSocket) {
         it->second(clientSocket);
     } else {
         std::cout << "Unknown command: " << command << std::endl;
-        SendToClient(clientSocket, "Unknown command.");
+        SendClient(clientSocket, "Unknown command.");
     }
 
-    SendToClient(clientSocket, "END_OF_COMMUNICATION");
+    SendClient(clientSocket, "END_OF_COMMUNICATION");
 }
 
 std::atomic<bool> running(true);
@@ -49,13 +49,13 @@ void HandleClient(SOCKET clientSocket) {
             HandleCommand(buffer, clientSocket);
         } else if (bytesRead == 0) {
             std::cout << "Connection closed by the client." << std::endl;
-            SendToClient(clientSocket, "No bytes recieved. Connection closed by the client.");
-            EndCom(clientSocket);
+            SendClient(clientSocket, "No bytes recieved. Connection closed by the client.");
+            SendClient(clientSocket, "END_OF_COMMUNICATION");
             break;
         } else {
             std::cerr << "Error receiving data from client or it disconnected." << std::endl;
-            SendToClient(clientSocket, "Error receiving data from client or it disconnected.");
-            EndCom(clientSocket);
+            SendClient(clientSocket, "Error receiving data from client or it disconnected.");
+            SendClient(clientSocket, "END_OF_COMMUNICATION");
             break;
         }
     }

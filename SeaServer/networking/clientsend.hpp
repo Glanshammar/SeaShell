@@ -2,7 +2,6 @@
 #define SENDTOCLIENT_HPP
 
 #include "../../global.hpp"
-void SendToClient(SOCKET clientSocket, const char* message);
-void EndCom(SOCKET clientSocket);
+void SendClient(SOCKET clientSocket, const char* message);
 
 #endif //SENDTOCLIENT_HPP
