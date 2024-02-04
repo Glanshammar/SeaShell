@@ -1,10 +1,14 @@
 # To-do
 **This file is your go-to guide for staying organized and on top of your tasks. Items here are categorized based on their priority: high, medium, and low. Keep track of your progress by marking completed tasks with an (X).**
 ___
+# Bugs
+* None
+
+
 # High Priority
 1. Socket communication (Client/Server) - Done
 2. Parse input and execute functions - Done
-3. Installer/Updater - Working on it
+3. Installer/Updater
 4. General Commands (*)
 
 # Medium Priority
