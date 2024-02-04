@@ -14,8 +14,6 @@ using CommandHandler = std::function<void(SOCKET)>;
 
 std::map<std::string, CommandHandler> commandHandlers = {
     {"hello", HelloWorld},
-    {"custom", CustomCommand},
-    {"another", AnotherCommand},
 };
 
 void HandleCommand(const char* command, const SOCKET clientSocket) {
