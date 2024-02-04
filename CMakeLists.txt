@@ -24,7 +24,8 @@ add_executable(SeaShell
         "SeaShell/files/execute.cpp"
         "SeaShell/files/execute.hpp"
         "SeaShell/networking/client.cpp"
-        "SeaShell/networking/client.hpp")
+        "SeaShell/networking/client.hpp"
+)
 
 add_executable(SeaServer
         "global.hpp"
@@ -33,11 +34,13 @@ add_executable(SeaServer
         "SeaServer/helloworld.cpp"
         "SeaServer/helloworld.hpp"
         "SeaServer/networking/clientsend.cpp"
-        "SeaServer/networking/clientsend.hpp")
+        "SeaServer/networking/clientsend.hpp"
+)
 
 add_executable(SeaInstaller
         "global.hpp"
-        "SeaShell/installer.cpp")
+        "SeaShell/installer.cpp"
+)
 
 target_link_libraries(SeaShell
         -static

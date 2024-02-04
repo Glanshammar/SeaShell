@@ -10,6 +10,7 @@
 #include <thread>
 #include <chrono>
 #include <csignal>
+#include <cstring>
 
 
 using std::string;
@@ -17,5 +18,6 @@ using std::vector;
 using std::cout;
 using std::endl;
 using std::cin;
+
 
 #endif
