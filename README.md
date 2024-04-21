@@ -1,25 +1,11 @@
-# SeaShell: Elevating the Command-Line Experience
-SeaShell is a cutting-edge, cross-platform CLI program designed to revolutionize the command-line experience. Drawing inspiration from established shells while forging its unique identity, SeaShell seamlessly integrates familiar functionalities with a sleek interface and formidable capabilities.
+# SeaShell: Ehancing the Command-Line Experience
+SeaShell aims to redefine the command-line interface experience with its ambitious vision. While drawing inspiration from established shells, it's currently a work-in-progress, striving to integrate familiar functionalities with a sleek interface and formidable capabilities. Though not fully realized yet, SeaShell is on a path toward revolutionizing the command-line experience.
 
-# Key Features
+# Features (Work-in-Progress)
 * **Cross-Platform Compatibility:** Works seamlessly across various operating systems.
 * **Sleek Interface:** A visually appealing shell enhancing user interaction.
 * **Powerful Scripting:** Empowers users to craft and execute robust scripts effortlessly.
 * **IDE:** An intuitive and simple IDE catering to both seasoned developers and newcomers.
-
-# Key Advantages
-* **Efficiency:** Streamline your workflow with a user-friendly platform.
-* **Flexibility:** Craft powerful scripts with simplicity and ease.
-* **Accessibility:** Suitable for beginners and seasoned developers alike.
-
-# Build Instructions
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Run `make` to build the project.
-4. Run `./seashell` to launch the shell.
-
-Configuration:
-Jetbrains CLion default settings and compiler.
 
 # License
 Distributed under the MIT License. See LICENSE for more information.
