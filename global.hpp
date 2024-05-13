@@ -23,6 +23,9 @@ auto UniquePtr(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
+#define Arguments const std::vector<std::string>&
+#define Options const std::vector<std::string>&
+
 using std::string;
 using std::vector;
 using std::cout;
