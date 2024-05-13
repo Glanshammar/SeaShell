@@ -1,17 +1,27 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#ifdef _WIN32
+#include <winsock2.h>
+#include <windows.h>
+#include <process.h>
+#endif
+
 #include <vector>
 #include <iostream>
 #include <string>
-#include <winsock2.h>
-#include <windows.h>
 #include <map>
 #include <thread>
 #include <chrono>
 #include <csignal>
 #include <cstring>
+#include <memory>
 
+// auto ptr = UniquePtr<int>(5);
+template<typename T, typename... Args>
+auto UniquePtr(Args&&... args) {
+    return std::make_unique<T>(std::forward<Args>(args)...);
+}
 
 using std::string;
 using std::vector;
@@ -19,5 +29,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+
+void UniquePointerTest();
 
 #endif
