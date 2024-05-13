@@ -4,23 +4,16 @@
 #include "functions.hpp"
 #include "networking/client.hpp"
 
-
-void ClearConsole(const vector<string>& args, const vector<string>& options) {
-    system("cls");
-}
-
 int main() {
-
     SetConsoleTitle(TEXT("SeaShell"));
 
-    HWND hwnd = GetConsoleWindow();  // Assuming you are working with a console window
-    auto hIcon = (HICON)LoadImage(NULL, "C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
+    HWND hwnd = GetConsoleWindow();
+    auto hIcon = (HICON)LoadImage(nullptr, "C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
     std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
         {"exec", ExecuteFile},
         {"connect", ConnectToServer},
-        {"clear", ClearConsole},
     };
 
     string input;
@@ -31,6 +24,11 @@ int main() {
 
         if(input == "exit") {
             break;
+        } else if (input.empty()) {
+            continue;
+        } else if (input == "clear") {
+            system("cls");
+            continue;
         }
 
         vector<string> tokens;
