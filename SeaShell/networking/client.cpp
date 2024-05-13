@@ -5,7 +5,7 @@
 #pragma comment(lib, "ws2_32.lib")
 
 
-void ConnectToServer(const std::vector<std::string>& args, const std::vector<std::string>& options) {
+void ConnectToServer(Arguments args, Options options) {
 
     const std::string serverIP = args.empty() ? "::1" : args[0];
     const std::string serverPort = (args.size() == 2) ? args[1] : "8080";
