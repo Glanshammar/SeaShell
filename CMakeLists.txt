@@ -3,6 +3,8 @@ project("SeaShell" VERSION 0.1 DESCRIPTION "The best shell ever!")
 
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(Python REQUIRED COMPONENTS Development)
+
 include_directories(
         "C:/C++/boost_1_85_0/"
         "C:/C++/freerdp-3.5.1/include/"
@@ -48,6 +50,7 @@ target_link_libraries(SeaShell
         -static
         Ws2_32.lib
         ${Boost_LIBRARIES}
+        ${Python_LIBRARIES}
 )
 
 target_link_libraries(SeaServer

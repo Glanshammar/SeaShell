@@ -14,6 +14,7 @@ int main() {
     std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
         {"exec", ExecuteFile},
         {"connect", ConnectToServer},
+        {"py", RunPythonScript},
     };
 
     string input;
