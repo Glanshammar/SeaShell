@@ -3,5 +3,6 @@
 
 //Includes all the headers of in the /functions directory.
 #include "files/execute.hpp"
+#include "files/python.hpp"
 
 #endif //FUNCTIONS_HPP
