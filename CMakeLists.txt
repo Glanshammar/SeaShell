@@ -12,7 +12,9 @@ include_directories(
         "C:/C++/ncurses-6.5/include/"
         "C:/C++/curl-8.7.1/include/"
         "C:/C++/yaml-cpp-0.8.0/include/"
+        "C:/Users/Mondus/AppData/Local/Programs/Python/Python312/include"
 )
+
 
 link_directories(
         "C:/C++/boost_1_85_0/libs"
@@ -27,6 +29,8 @@ add_executable(SeaShell
         "SeaShell/networking/client.cpp"
         "SeaShell/networking/client.hpp"
         "global.cpp"
+        "SeaShell/files/python.cpp"
+        "SeaShell/files/python.hpp"
 )
 
 add_executable(SeaServer
