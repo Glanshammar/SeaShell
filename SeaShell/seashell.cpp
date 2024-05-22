@@ -8,13 +8,14 @@ int main() {
     SetConsoleTitle(TEXT("SeaShell"));
 
     HWND hwnd = GetConsoleWindow();
-    auto hIcon = (HICON)LoadImage(nullptr, "C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
+    auto hIcon = (HICON)LoadImage(nullptr, L"C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
     std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
         {"exec", ExecuteFile},
         {"connect", ConnectToServer},
         {"py", RunPythonScript},
+        {"poco", performHttpGet},
     };
 
     string input;
