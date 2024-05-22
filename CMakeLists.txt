@@ -4,6 +4,17 @@ project("SeaShell" VERSION 0.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(POCO_ROOT "C:/C++/poco-1.13.3/")
+set(CPP_FOLDER "C:/C++/")
+
+if(WIN32)
+    set(USER_HOME $ENV{USERPROFILE})
+elseif(UNIX)
+    set(USER_HOME $ENV{HOME})
+endif()
+
+if(NOT USER_HOME)
+    message(FATAL_ERROR "Could not determine the user's home directory")
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Building in Debug mode")
@@ -33,15 +44,15 @@ find_package(Poco REQUIRED
 
 
 include_directories(
-        "C:/C++/boost_1_85_0/"
-        "C:/C++/freerdp-3.5.1/include/"
-        "C:/C++/openssl-3.2.1/include/"
-        "C:/C++/libssh2-1.11.0/include/"
-        "C:/C++/cryptopp890/"
-        "C:/C++/ncurses-6.5/include/"
-        "C:/C++/curl-8.7.1/include/"
-        "C:/C++/yaml-cpp-0.8.0/include/"
-        "C:/Users/Mondus/AppData/Local/Programs/Python/Python312/include"
+        "${CPP_FOLDER}/boost_1_85_0/"
+        "${CPP_FOLDER}/freerdp-3.5.1/include/"
+        "${CPP_FOLDER}/openssl-3.2.1/include/"
+        "${CPP_FOLDER}/libssh2-1.11.0/include/"
+        "${CPP_FOLDER}/cryptopp890/"
+        "${CPP_FOLDER}/ncurses-6.5/include/"
+        "${CPP_FOLDER}/curl-8.7.1/include/"
+        "${CPP_FOLDER}/yaml-cpp-0.8.0/include/"
+        "${USER_HOME}/AppData/Local/Programs/Python/Python312/include"
 )
 
 include_directories(
