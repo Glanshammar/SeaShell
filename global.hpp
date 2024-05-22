@@ -19,6 +19,9 @@
 #include <any>
 #include <filesystem>
 #include <fstream>
+#include <Poco/Logger.h>
+#include <Poco/ConsoleChannel.h>
+#include <Poco/AutoPtr.h>
 
 
 // auto ptr = UniquePtr<int>(5);
