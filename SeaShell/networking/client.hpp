@@ -4,7 +4,7 @@
 #include "../../global.hpp"
 
 
-void ConnectToServer(const vector<string>& args, const vector<string>& options);
+void ConnectToServer(Arguments args, Options options);
 
 
 #endif //CLIENT_HPP

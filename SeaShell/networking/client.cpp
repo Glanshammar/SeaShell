@@ -2,8 +2,6 @@
 #include <ws2ipdef.h>
 #include <ws2tcpip.h>
 
-#pragma comment(lib, "ws2_32.lib")
-
 
 void ConnectToServer(Arguments args, Options options) {
 
@@ -15,92 +13,4 @@ void ConnectToServer(Arguments args, Options options) {
     } else {
         serverName = serverIP;
     }
-
-    // Initialize Winsock
-    WSADATA wsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        std::cerr << "Failed to initialize Winsock" << std::endl;
-        return;
-    }
-
-    // Create a socket
-    SOCKET clientSocket = socket(AF_INET6, SOCK_STREAM, 0);
-    if (clientSocket == INVALID_SOCKET) {
-        std::cerr << "Error creating socket" << std::endl;
-        WSACleanup();
-        return;
-    }
-
-    // Set up server address structure
-    sockaddr_in6 serverAddress{};
-    serverAddress.sin6_family = AF_INET6;
-
-    // Use InetPton to convert the server IP address
-    if (InetPton(AF_INET6, serverIP.c_str(), &(serverAddress.sin6_addr)) != 1) {
-        std::cerr << "Error converting IP address" << std::endl;
-        closesocket(clientSocket);
-        WSACleanup();
-        return;
-    }
-
-    serverAddress.sin6_port = htons(std::stoi(serverPort));
-
-    // Connect to the server
-    if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR) {
-        std::cerr << "Error connecting to the server" << std::endl;
-        closesocket(clientSocket);
-        WSACleanup();
-        return;
-    }
-
-    std::cout << "Connected to the server." << std::endl;
-
-    char buffer[1024];
-    std::string command;
-    while(true)
-    {
-        std::cout << "@" << serverName << " >> ";
-        std::getline(std::cin, command);
-
-        if (command.empty()) {
-            continue;
-        }
-
-        if (command == "exit") {
-            break;
-        }
-
-        if (send(clientSocket, command.c_str(), command.size(), 0) == SOCKET_ERROR) {
-            std::cerr << "Error sending command" << std::endl;
-            return;
-        }
-
-        if (command == "exit") {
-            break;
-        }
-
-        while(true)
-        {
-            int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-
-            if (bytesRead > 0) {
-                buffer[bytesRead] = '\0';
-
-                if (strcmp(buffer, "END_OF_COMMUNICATION") == 0) {
-                    break;
-                }
-                cout << "Server response: " << buffer << endl;
-            } else if (bytesRead == 0) {
-                cout << "Connection closed by the server." << endl;
-                break;
-            } else {
-                std::cerr << "Error receiving data" << endl;
-                break;
-            }
-        }
-
-    }
-
-    closesocket(clientSocket);
-    WSACleanup();
 }
