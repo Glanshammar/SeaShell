@@ -3,8 +3,8 @@ project("SeaShell" VERSION 0.1)
 
 
 set(CMAKE_CXX_STANDARD 20)
-set(POCO_ROOT "C:/C++/poco-1.13.3/")
 set(CPP_FOLDER "C:/C++/")
+set(POCO_ROOT "${CPP_FOLDER}/poco-1.13.3/")
 
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
