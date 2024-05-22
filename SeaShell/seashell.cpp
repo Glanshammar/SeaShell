@@ -15,7 +15,7 @@ int main() {
         {"exec", ExecuteFile},
         {"connect", ConnectToServer},
         {"py", RunPythonScript},
-        {"poco", performHttpGet},
+        {"poco", POCOLoggingTest},
     };
 
     string input;
