@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.27)
-project("SeaShell" VERSION 0.1)
+project("SeaShell")
 
 
 set(CMAKE_CXX_STANDARD 20)
-set(CPP_FOLDER "C:/C++/")
-set(POCO_ROOT "${CPP_FOLDER}/poco-1.13.3/")
+set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(LIBRARY_DIRECTORY "C:/C++/")
+set(POCO_ROOT "${LIBRARY_DIRECTORY}/poco-1.13.3")
+set(OPENSSL_ROOT_DIR "C:/Program Files/OpenSSL" CACHE PATH "Path to OpenSSL root directory")
+
+option(USE_MYSQL "Use MySQL" ON)
 
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
@@ -40,28 +44,26 @@ find_package(Poco REQUIRED
         XML
         JSON
         Data
+        Crypto
 )
 
 
 include_directories(
-        "${CPP_FOLDER}/boost_1_85_0/"
-        "${CPP_FOLDER}/freerdp-3.5.1/include/"
-        "${CPP_FOLDER}/openssl-3.2.1/include/"
-        "${CPP_FOLDER}/libssh2-1.11.0/include/"
-        "${CPP_FOLDER}/cryptopp890/"
-        "${CPP_FOLDER}/ncurses-6.5/include/"
-        "${CPP_FOLDER}/curl-8.7.1/include/"
-        "${CPP_FOLDER}/yaml-cpp-0.8.0/include/"
+        "${LIBRARY_DIRECTORY}/boost_1_85_0/"
+        "${LIBRARY_DIRECTORY}/freerdp-3.5.1/include/"
+        "${LIBRARY_DIRECTORY}/ncurses-6.5/include/"
+        "${LIBRARY_DIRECTORY}/curl-8.7.1/include/"
         "${USER_HOME}/AppData/Local/Programs/Python/Python312/include"
 )
 
 include_directories(
-        ${POCO_ROOT}/Foundation/include
-        ${POCO_ROOT}/Util/include
-        ${POCO_ROOT}/Net/include
-        ${POCO_ROOT}/XML/include
-        ${POCO_ROOT}/JSON/include
-        ${POCO_ROOT}/Data/include
+        "${POCO_ROOT}/Foundation/include"
+        "${POCO_ROOT}/Util/include"
+        "${POCO_ROOT}/Net/include"
+        "${POCO_ROOT}/XML/include"
+        "${POCO_ROOT}/JSON/include"
+        "${POCO_ROOT}/Data/include"
+        "${POCO_ROOT}/Crypto/include"
 )
 
 link_directories(
@@ -76,6 +78,7 @@ set(POCO_LIBS
         Poco::XML
         Poco::JSON
         Poco::Data
+        Poco::Crypto
 )
 
 add_executable(SeaShell
@@ -91,6 +94,8 @@ add_executable(SeaShell
         "SeaShell/files/python.hpp"
         "SeaShell/pocotest.cpp"
         "SeaShell/pocotest.hpp"
+        "SeaShell/files/encrypt.cpp"
+        "SeaShell/files/encrypt.hpp"
 )
 
 add_executable(SeaServer
