@@ -8,7 +8,7 @@ int main() {
     SetConsoleTitle(TEXT("SeaShell"));
 
     HWND hwnd = GetConsoleWindow();
-    auto hIcon = (HICON)LoadImage(nullptr, L"C:/Users/Mondus/Pictures/Program Media/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
+    auto hIcon = (HICON)LoadImage(nullptr, L"../Data/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
     std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
@@ -24,11 +24,11 @@ int main() {
         cout << ">> " << std::flush;
         std::getline(std::cin, input);
 
-        if(input == "exit") {
-            break;
-        } else if (input.empty()) {
+        if (input.empty()) {
             continue;
-        } else if (input == "clear") {
+        } else if(input == "exit" || input == "quit" || input == "q" || input == "e") {
+            break;
+        } else if (input == "clear" || input == "cls") {
             system("cls");
             continue;
         }
