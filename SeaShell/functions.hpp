@@ -5,5 +5,7 @@
 #include "files/execute.hpp"
 #include "files/python.hpp"
 #include "pocotest.hpp"
+#include "files/encrypt.hpp"
+#include "networking/ssh.hpp"
 
 #endif //FUNCTIONS_HPP
