@@ -15,11 +15,11 @@ Under the "Libraries" directory, there's another CMakeLists file for helping wit
 **All dependencies are built and installed using vcpkg.**
 * **CMake:** 3.27 or higher
 * **C++ Compiler:** GCC 14 (Linux), MSVC v143 (Windows)
-* **Boost:** 1.85 or higher
-* **POCO:** 1.13 or higher
-* **OpenSSL:**
-* **curl:**
-* **libssh-2:**
+* **Boost**
+* **POCO**
+* **OpenSSL**
+* **curl**
+* **libssh-2**
 
 ***Other Dependencies***
 * **MySQL:** 8.4 or higher (Optional, install Server community edition from https://dev.mysql.com/downloads/mysql/)
