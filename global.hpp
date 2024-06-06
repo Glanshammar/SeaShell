@@ -1,5 +1,4 @@
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#pragma once
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -41,5 +40,3 @@ using std::cin;
 
 
 void UniquePointerTest();
-
-#endif
