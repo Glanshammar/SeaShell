@@ -21,7 +21,7 @@
 #include <Poco/Logger.h>
 #include <Poco/ConsoleChannel.h>
 #include <Poco/AutoPtr.h>
-
+#include <cstdlib>
 
 // auto ptr = UniquePtr<int>(5);
 template<typename T, typename... Args>
@@ -31,6 +31,7 @@ auto UniquePtr(Args&&... args) {
 
 #define Arguments const std::vector<std::string>&
 #define Options const std::vector<std::string>&
+#define CurrentDir std::filesystem::current_path().string()
 
 using std::string;
 using std::vector;
