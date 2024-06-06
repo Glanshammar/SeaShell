@@ -1,0 +1,7 @@
+{
+  "colors": {
+    "input": "CYAN",
+    "ls_dir": "BLUE",
+    "ls_file": "GREEN"
+  }
+}
