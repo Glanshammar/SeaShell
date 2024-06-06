@@ -20,6 +20,7 @@ Under the "Libraries" directory, there's another CMakeLists file for helping wit
 * **OpenSSL**
 * **curl**
 * **libssh-2**
+* **python3**
 
 ***Other Dependencies***
 * **MySQL:** 8.4 or higher (Optional, install Server community edition from https://dev.mysql.com/downloads/mysql/)
