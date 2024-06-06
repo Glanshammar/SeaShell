@@ -3,10 +3,8 @@
 #include "../global.hpp"
 #include "functions.hpp"
 
-template<typename Func>
-using FunctionType = std::function<Func>;
 
-std::map<std::string, FunctionType<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
+std::map<std::string, std::function<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
         {"exec", ExecuteFile},
         {"ssh", ConnectToSSH},
         {"py", RunPythonScript},
