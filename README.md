@@ -12,14 +12,17 @@ The CMake file in this (root) directory is for building the project.
 Under the "Libraries" directory, there's another CMakeLists file for helping with the dependencies.
 
 ## Dependencies
+**All dependencies are built and installed using vcpkg.**
 * **CMake:** 3.27 or higher
 * **C++ Compiler:** GCC 14 (Linux), MSVC v143 (Windows)
 * **Boost:** 1.85 or higher
 * **POCO:** 1.13 or higher
-  * **APR:** 1.7 or higher
-  * **APR-Util:** 1.6 or higher
-  * **MySQL:** 8.4 or higher (Optional)
-  * **OpenSSL:** 3.3 or higher
+* **OpenSSL:**
+* **curl:**
+* **libssh-2:**
+
+***Other Dependencies***
+* **MySQL:** 8.4 or higher (Optional, install Server community edition from https://dev.mysql.com/downloads/mysql/)
 
 ## Windows
 1. Clone the repository.
