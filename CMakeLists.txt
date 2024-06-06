@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project("SeaShell")
+set(CMAKE_CXX_STANDARD 20)
+set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_TOOLCHAIN_FILE "${USER_HOME}/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
@@ -10,10 +13,6 @@ endif()
 if(NOT USER_HOME)
     message(FATAL_ERROR "Could not determine the user's home directory")
 endif()
-
-set(CMAKE_CXX_STANDARD 20)
-set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_TOOLCHAIN_FILE "${USER_HOME}/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 
 option(USE_MYSQL "Use MySQL" ON)
 
@@ -81,6 +80,10 @@ add_executable(SeaShell
         "SeaShell/files/encrypt.hpp"
         "SeaShell/networking/ssh.cpp"
         "SeaShell/networking/ssh.hpp"
+        "SeaShell/files/filesystem.cpp"
+        "SeaShell/files/filesystem.hpp"
+        "SeaShell/color.cpp"
+        "SeaShell/color.hpp"
 )
 
 add_executable(SeaServer
