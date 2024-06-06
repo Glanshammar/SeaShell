@@ -9,6 +9,8 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"ssh", ConnectToSSH},
         {"py", RunPythonScript},
         {"poco", POCOLoggingTest},
+        {"cd", ChangeDirectory},
+        {"ls", ListDirectoryContents},
 };
 
 int main() {
@@ -19,9 +21,14 @@ int main() {
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
     string input;
+    ChangeDirectory({"~"}, {});
 
     while (true) {
-        cout << ">> " << std::flush;
+        setColor(Color::CYAN);
+        std::cout << CurrentDir;
+        setColor(Color::WHITE);
+        std::cout << " >> " << std::flush;
+
         std::getline(std::cin, input);
 
         if (input.empty()) {
