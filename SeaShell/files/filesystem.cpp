@@ -25,12 +25,14 @@ void ChangeDirectory(Arguments args, Options options) {
 }
 
 void ListDirectoryContents(Arguments args, Options options) {
-    if(options[0] == "-h"){
-        cout << "Usage: ls" << endl;
-        cout << "List directory contents.\n" << std::flush;
-        cout << "Files has the color...\n" << std::flush;
-        cout << "Directories has the color..." << endl;
-        return;
+    if(!options.empty()){
+        if(options[0] == "-h"){
+            cout << "Usage: ls" << endl;
+            cout << "List directory contents.\n" << std::flush;
+            cout << "Files has the color...\n" << std::flush;
+            cout << "Directories has the color..." << endl;
+            return;
+        }
     }
     try {
         std::string path = std::filesystem::current_path().string();
