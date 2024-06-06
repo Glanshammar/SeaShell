@@ -7,5 +7,7 @@
 #include "pocotest.hpp"
 #include "files/encrypt.hpp"
 #include "networking/ssh.hpp"
+#include "files/filesystem.hpp"
+#include "color.hpp"
 
 #endif //FUNCTIONS_HPP
