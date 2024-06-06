@@ -3,21 +3,22 @@
 #include "../global.hpp"
 #include "functions.hpp"
 
+template<typename Func>
+using FunctionType = std::function<Func>;
+
+std::map<std::string, FunctionType<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
+        {"exec", ExecuteFile},
+        {"ssh", ConnectToSSH},
+        {"py", RunPythonScript},
+        {"poco", POCOLoggingTest},
+};
+
 int main() {
     SetConsoleTitle(TEXT("SeaShell"));
 
     HWND hwnd = GetConsoleWindow();
     auto hIcon = (HICON)LoadImage(nullptr, L"../Data/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-
-    std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
-        {"exec", ExecuteFile},
-        {"ssh", ConnectToSSH},
-        {"py", RunPythonScript},
-        {"poco", POCOLoggingTest},
-        {"encrypt", Encrypt},
-        {"decrypt", Decrypt},
-    };
 
     string input;
 
