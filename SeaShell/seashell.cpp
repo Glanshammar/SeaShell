@@ -2,7 +2,6 @@
 #include <functional>
 #include "../global.hpp"
 #include "functions.hpp"
-#include "networking/client.hpp"
 
 int main() {
     SetConsoleTitle(TEXT("SeaShell"));
@@ -13,9 +12,11 @@ int main() {
 
     std::map<string, std::function<void(const vector<string>& args, const vector<string>& options)>> functionMap = {
         {"exec", ExecuteFile},
-        {"connect", ConnectToServer},
+        {"ssh", ConnectToSSH},
         {"py", RunPythonScript},
         {"poco", POCOLoggingTest},
+        {"encrypt", Encrypt},
+        {"decrypt", Decrypt},
     };
 
     string input;
