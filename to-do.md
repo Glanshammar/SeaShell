@@ -4,23 +4,17 @@ ___
 # Bugs
 * None
 
-
-# High Priority
-1. Socket communication (Client/Server) - Done
-2. Parse input and execute functions - Done
-3. Installer/Updater
-4. General Commands (*)
-
-# Medium Priority
-1. YAML 
-2. Aliases
-3. RDP Support
-4. Compression (zip, tar, etc.)
-5. Tab completion
-
-# Low Priority
-1. Scripting functionality (**)
-2. IDE
+# Features
+1. Installer/Updater
+2. General Commands (*)
+3. Configuration file (Settings)
+    * Console colors 
+    * Aliases
+4. RDP Support
+5. Compression (zip, tar, etc.)
+6. Tab completion
+7. Scripting functionality (**)
+8. IDE
 
 
 # General Commands (*)
