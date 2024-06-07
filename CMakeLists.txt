@@ -80,21 +80,14 @@ add_executable(SeaShell
         "SeaShell/files/encrypt.hpp"
         "SeaShell/networking/ssh.cpp"
         "SeaShell/networking/ssh.hpp"
+        "SeaShell/networking/clientsend.cpp"
+        "SeaShell/networking/clientsend.hpp"
         "SeaShell/files/filesystem.cpp"
         "SeaShell/files/filesystem.hpp"
         "SeaShell/color.cpp"
         "SeaShell/color.hpp"
         "SeaShell/help.cpp"
         "SeaShell/help.hpp"
-)
-
-add_executable(SeaServer
-        "global.hpp"
-        "SeaServer/functions.hpp"
-        "SeaServer/seaserver.cpp"
-        "SeaServer/networking/clientsend.cpp"
-        "SeaServer/networking/clientsend.hpp"
-        "global.cpp"
 )
 
 set(POCO_LIBS
@@ -134,20 +127,8 @@ set(BOOST_LIBS
 target_link_libraries(SeaShell
         PUBLIC
         Ws2_32
-        ${Python_LIBRARIES}
-        ${POCO_LIBS}
-        ${BOOST_LIBS}
-        CURL::libcurl
-        freerdp
-        OpenSSL::SSL
-        OpenSSL::Crypto
-        $<IF:$<TARGET_EXISTS:Libssh2::libssh2_shared>,Libssh2::libssh2_shared,Libssh2::libssh2_static>
-)
-
-target_link_libraries(SeaServer
-        PUBLIC
-        Ws2_32
         iphlpapi
+        ${Python_LIBRARIES}
         ${POCO_LIBS}
         ${BOOST_LIBS}
         CURL::libcurl
