@@ -14,3 +14,9 @@ enum class Color {
 };
 
 void setColor(Color color);
+
+inline void ColorPrint(Color color, const std::string& text) {
+    setColor(color);
+    std::cout << text;
+    setColor(Color::DEFAULT);
+}
