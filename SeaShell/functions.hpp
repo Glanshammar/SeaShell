@@ -9,5 +9,6 @@
 #include "networking/ssh.hpp"
 #include "files/filesystem.hpp"
 #include "color.hpp"
+#include "help.hpp"
 
 #endif //FUNCTIONS_HPP
