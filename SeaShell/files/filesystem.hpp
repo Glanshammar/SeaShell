@@ -16,3 +16,9 @@
 std::string getHomeDirectory();
 void ChangeDirectory(Arguments args, Options options);
 void ListDirectoryContents(Arguments args, Options options);
+void CreateFolder(Arguments args, Options options);
+void AddFile(Arguments args, Options options);
+void RemoveFile(Arguments args, Options options);
+void RemoveFolder(Arguments args, Options options);
+void FileCopy(Arguments args, Options options);
+void FileMove(Arguments args, Options options);
