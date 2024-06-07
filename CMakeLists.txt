@@ -84,6 +84,8 @@ add_executable(SeaShell
         "SeaShell/files/filesystem.hpp"
         "SeaShell/color.cpp"
         "SeaShell/color.hpp"
+        "SeaShell/help.cpp"
+        "SeaShell/help.hpp"
 )
 
 add_executable(SeaServer
