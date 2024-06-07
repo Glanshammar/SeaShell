@@ -2,7 +2,7 @@
 #define EXECUTE_HPP
 
 
-#include "../../global.hpp"
+#include "../global.hpp"
 
 
 void ExecuteFile(Arguments args, Options options);

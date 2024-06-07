@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../global.hpp"
+#include "../global.hpp"
 #include "../color.hpp"
 
 #if defined(_WIN32) || defined(_WIN64)

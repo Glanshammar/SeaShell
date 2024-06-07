@@ -2,7 +2,7 @@
 #define PYTHON_HPP
 
 #include "Python.h"
-#include "../../global.hpp"
+#include "../global.hpp"
 
 void RunPythonScript(Arguments args, Options options);
 

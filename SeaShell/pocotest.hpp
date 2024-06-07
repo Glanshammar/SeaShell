@@ -2,7 +2,7 @@
 #define POCOTEST_HPP
 
 
-#include "../global.hpp"
+#include "global.hpp"
 
 extern void POCOLoggingTest(Arguments args, Options options);
 

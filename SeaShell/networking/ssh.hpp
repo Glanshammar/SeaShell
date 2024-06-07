@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../global.hpp"
+#include "../global.hpp"
 #include <libssh2.h>
 
 #ifdef _WIN32

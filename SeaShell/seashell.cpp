@@ -1,6 +1,6 @@
 #include <map>
 #include <functional>
-#include "../global.hpp"
+#include "global.hpp"
 #include "functions.hpp"
 
 

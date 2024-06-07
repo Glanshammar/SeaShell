@@ -66,7 +66,7 @@ find_package(Poco REQUIRED
 
 
 add_executable(SeaShell
-        "global.cpp" "global.hpp"
+        "SeaShell/global.cpp" "SeaShell/global.hpp"
         "SeaShell/seashell.cpp" "SeaShell/functions.hpp"
         "SeaShell/files/execute.cpp" "SeaShell/files/execute.hpp"
         "SeaShell/files/python.cpp" "SeaShell/files/python.hpp"
