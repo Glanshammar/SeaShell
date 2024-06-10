@@ -18,14 +18,36 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"rmdir", RemoveFolder},
         {"mv", FileMove},
         {"cp", FileCopy},
+        {"ip", ListInterfaces},
 };
 
-int main() {
-    SetConsoleTitle(TEXT("SeaShell"));
 
+void SetupConsoleWindow() {
+#if defined(_WIN32) || defined(_WIN64)
+    SetConsoleTitle(TEXT("SeaShell"));
     HWND hwnd = GetConsoleWindow();
-    auto hIcon = (HICON)LoadImage(nullptr, L"../Data/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
-    SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+    auto iconDeleter = [](HICON hIcon) {
+        if (hIcon) {
+            DestroyIcon(hIcon);
+        }
+    };
+
+    std::unique_ptr<std::remove_pointer<HICON>::type, decltype(iconDeleter)> hIcon(
+            (HICON)LoadImage(nullptr, L"../Data/mandala.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE),
+            iconDeleter
+    );
+
+    if (hIcon) {
+        SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon.get());
+    } else {
+        std::cerr << "Failed to load icon" << std::endl;
+    }
+#endif
+}
+
+int main() {
+    SetupConsoleWindow();
 
     string input;
     ChangeDirectory({"~"}, {});
@@ -44,6 +66,9 @@ int main() {
             break;
         } else if (input == "clear" || input == "cls") {
             system("cls");
+            continue;
+        } else if (input == "path") {
+            std::cout << "PATH: " << std::getenv("PATH") << std::endl;
             continue;
         }
 
@@ -86,10 +111,9 @@ int main() {
         if (functionMap.contains(command)) {
             functionMap[command](tokens, options);
         } else {
-            cout << "Unknown command: " << command << endl;
+            system(input.c_str());
         }
     }
 
-    DestroyIcon(hIcon);
     return 0;
 }
