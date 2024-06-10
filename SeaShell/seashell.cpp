@@ -19,6 +19,7 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"mv", FileMove},
         {"cp", FileCopy},
         {"ip", ListInterfaces},
+        {"dll", LoadDLL},
 };
 
 
@@ -67,9 +68,6 @@ int main() {
         } else if (input == "clear" || input == "cls") {
             system("cls");
             continue;
-        } else if (input == "path") {
-            std::cout << "PATH: " << std::getenv("PATH") << std::endl;
-            continue;
         }
 
         vector<string> tokens;
@@ -86,7 +84,7 @@ int main() {
         }
 
         if (tokens.empty()) {
-            cout << "Invalid input. Try again." << endl;
+            cout << "Invalid input. Try again." << std::endl;
             continue;
         }
 
@@ -102,11 +100,6 @@ int main() {
                 ++it;
             }
         }
-
-        for (const auto& item: options) {
-            cout << "Option: " << item << endl;
-        }
-
         
         if (functionMap.contains(command)) {
             functionMap[command](tokens, options);
