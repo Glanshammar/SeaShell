@@ -2,6 +2,7 @@
 
 #include "../global.hpp"
 #include "../color.hpp"
+#include <numeric>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <direct.h>

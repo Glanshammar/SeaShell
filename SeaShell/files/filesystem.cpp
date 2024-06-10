@@ -1,6 +1,6 @@
 #include "filesystem.hpp"
 
-std::string getHomeDirectory() {
+string getHomeDirectory() {
 #if defined(_WIN32) || defined(_WIN64)
     return std::getenv("USERPROFILE");
 #else
@@ -9,18 +9,27 @@ std::string getHomeDirectory() {
 }
 
 void ChangeDirectory(Arguments args, Options options) {
-    if (args.size() != 1) {
+    if (args.empty()) {
         cout << "No path provided." << endl;
         return;
     }
 
 
-    const string& path = args[0];
+    string path = std::accumulate(args.begin(), args.end(), std::string(),
+                                       [](const std::string& a, const std::string& b) -> std::string {
+                                           return a + (a.length() > 0 ? " " : "") + b;
+                                       });
+
+    int result = -1;
 
     if (path == "~" || path == "user") {
-        ChangeDir(getHomeDirectory().c_str()) == 0;
+        result = ChangeDir(getHomeDirectory().c_str());
     } else {
-        ChangeDir(path.c_str()) == 0;
+        result = ChangeDir(path.c_str());
+    }
+
+    if (result != 0) {
+        perror("ChangeDir failed");
     }
 }
 
