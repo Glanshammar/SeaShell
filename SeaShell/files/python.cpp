@@ -11,7 +11,7 @@ void RunPythonScript(Arguments args, Options options) {
     wchar_t* program = Py_DecodeLocale("SeaShell", nullptr);
 
     if(program == nullptr) {
-        cout << "Fatal error: cannot decode script path." << endl;
+        cout << "Fatal error: cannot decode script path." << std::endl;
         exit(1);
     }
 
