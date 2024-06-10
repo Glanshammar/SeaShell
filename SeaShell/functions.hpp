@@ -10,5 +10,6 @@
 #include "files/filesystem.hpp"
 #include "color.hpp"
 #include "help.hpp"
+#include "networking/ip.hpp"
 
 #endif //FUNCTIONS_HPP
