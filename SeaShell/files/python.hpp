@@ -1,10 +1,6 @@
-#ifndef PYTHON_HPP
-#define PYTHON_HPP
+#pragma once
 
 #include "Python.h"
 #include "../global.hpp"
 
 void RunPythonScript(Arguments args, Options options);
-
-
-#endif //PYTHON_HPP

@@ -1,10 +1,5 @@
-#ifndef EXECUTE_HPP
-#define EXECUTE_HPP
-
+#pragma once
 
 #include "../global.hpp"
 
-
 void ExecuteFile(Arguments args, Options options);
-
-#endif //EXECUTE_HPP
