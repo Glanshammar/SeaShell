@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 3.28)
 project("SeaShell")
 set(CMAKE_CXX_STANDARD 20)
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_TOOLCHAIN_FILE "${USER_HOME}/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
-
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
 elseif(UNIX)
     set(USER_HOME $ENV{HOME})
 endif()
+set(CMAKE_TOOLCHAIN_FILE "${USER_HOME}/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+
 
 if(NOT USER_HOME)
     message(FATAL_ERROR "Could not determine the user's home directory")
@@ -77,6 +77,8 @@ add_executable(SeaShell
         "SeaShell/files/filesystem.cpp" "SeaShell/files/filesystem.hpp"
         "SeaShell/color.cpp" "SeaShell/color.hpp"
         "SeaShell/help.cpp" "SeaShell/help.hpp"
+        "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
+        "SeaShell/files/dll.cpp" "SeaShell/files/dll.hpp"
 )
 
 set(POCO_LIBS
@@ -116,7 +118,6 @@ set(BOOST_LIBS
 target_link_libraries(SeaShell
         PUBLIC
         Ws2_32
-        iphlpapi
         ${Python_LIBRARIES}
         ${POCO_LIBS}
         ${BOOST_LIBS}
