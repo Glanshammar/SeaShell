@@ -10,7 +10,7 @@ string getHomeDirectory() {
 
 void ChangeDirectory(Arguments args, Options options) {
     if (args.empty()) {
-        cout << "No path provided." << endl;
+        cout << "No path provided." << std::endl;
         return;
     }
 
@@ -36,10 +36,10 @@ void ChangeDirectory(Arguments args, Options options) {
 void ListDirectoryContents(Arguments args, Options options) {
     if(!options.empty()){
         if(options[0] == "-h"){
-            cout << "Usage: ls" << endl;
-            cout << "List directory contents." << endl;
-            cout << "Files has the color..." << endl;
-            cout << "Directories has the color..." << endl;
+            cout << "Usage: ls" << std::endl;
+            cout << "List directory contents." << std::endl;
+            cout << "Files has the color..." << std::endl;
+            cout << "Directories has the color..." << std::endl;
             return;
         }
     }
@@ -203,7 +203,7 @@ void FileMove(Arguments args, Options options) {
         std::filesystem::remove(source);
         std::cout << "File moved successfully." << std::endl;
     } catch (std::filesystem::filesystem_error& e) {
-        std::cerr << "Error moving file: " << e.what() << endl;
+        std::cerr << "Error moving file: " << e.what() << std::endl;
     }
 }
 
@@ -220,6 +220,6 @@ void FileCopy(Arguments args, Options options) {
         std::filesystem::copy(source, destination, std::filesystem::copy_options::overwrite_existing);
         std::cout << "File copied successfully." << std::endl;
     } catch (std::filesystem::filesystem_error& e) {
-        std::cerr << "Error copying file: " << e.what() << endl;
+        std::cerr << "Error copying file: " << e.what() << std::endl;
     }
 }
