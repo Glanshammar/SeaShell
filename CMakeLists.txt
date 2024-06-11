@@ -78,7 +78,6 @@ add_executable(SeaShell
         "SeaShell/color.cpp" "SeaShell/color.hpp"
         "SeaShell/help.cpp" "SeaShell/help.hpp"
         "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
-        "SeaShell/files/dll.cpp" "SeaShell/files/dll.hpp"
 )
 
 set(POCO_LIBS
