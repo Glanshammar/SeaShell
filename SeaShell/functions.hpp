@@ -11,6 +11,5 @@
 #include "color.hpp"
 #include "help.hpp"
 #include "networking/ip.hpp"
-#include "files/dll.hpp"
 
 #endif //FUNCTIONS_HPP
