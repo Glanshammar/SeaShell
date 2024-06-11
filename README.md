@@ -13,14 +13,16 @@ Under the "Libraries" directory, there's another CMakeLists file for helping wit
 
 ## Dependencies
 **All dependencies are built and installed using vcpkg.**
-* **CMake:** 3.27 or higher
+* **CMake:** 3.28 or higher
 * **C++ Compiler:** GCC 14 (Linux), MSVC v143 (Windows)
-* **Boost**
-* **POCO**
-* **OpenSSL**
-* **curl**
-* **libssh-2**
-* **python3**
+* **Boost 1.85**
+* **POCO 1.13.3**
+* **OpenSSL 3.3.0**
+* **curl 8.8.0**
+* **libssh-2 1.11**
+* **python 3.11 (vcpkg version, included in Boost)**
+* **FreeRDP 3.4.0**
+* **SQLite 3.46**
 
 ***Other Dependencies***
 * **MySQL:** 8.4 or higher (Optional, install Server community edition from https://dev.mysql.com/downloads/mysql/)
