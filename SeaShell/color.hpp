@@ -15,8 +15,21 @@ enum class Color {
 
 void setColor(Color color);
 
-inline void ColorPrint(Color color, const std::string& text) {
-    setColor(color);
-    std::cout << text << std::endl;
-    setColor(Color::DEFAULT);
+template<typename T>
+void Print(T arg) {
+    std::cout << arg;
 }
+
+// Recursive template function to print multiple arguments
+template<typename T, typename... Args>
+void Print(T firstArg, Args... args) {
+    if constexpr (std::is_same_v<T, Color>) {
+        setColor(firstArg);
+        qPrint(args...);
+        setColor(Color::DEFAULT); // Reset color to default after printing
+    } else {
+        std::cout << firstArg << " ";
+        qPrint(args...);
+    }
+}
+
