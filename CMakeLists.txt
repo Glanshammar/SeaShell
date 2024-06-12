@@ -31,6 +31,7 @@ find_package(FreeRDP CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Python REQUIRED COMPONENTS Development)
 find_package(Libssh2 CONFIG REQUIRED)
+find_package(SQLite3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS
         atomic
         chrono
@@ -77,6 +78,7 @@ add_executable(SeaShell
         "SeaShell/color.cpp" "SeaShell/color.hpp"
         "SeaShell/help.cpp" "SeaShell/help.hpp"
         "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
+        "SeaShell/networking/sql.cpp" "SeaShell/networking/sql.hpp"
 )
 
 set(POCO_LIBS
@@ -123,5 +125,6 @@ target_link_libraries(SeaShell
         freerdp
         OpenSSL::SSL
         OpenSSL::Crypto
+        SQLite::SQLite3
         $<IF:$<TARGET_EXISTS:Libssh2::libssh2_shared>,Libssh2::libssh2_shared,Libssh2::libssh2_static>
 )

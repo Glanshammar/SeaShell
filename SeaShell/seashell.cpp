@@ -17,6 +17,7 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"mv", FileMove},
         {"cp", FileCopy},
         {"ip", ListInterfaces},
+        {"sql", LoadSQLite},
 };
 
 
