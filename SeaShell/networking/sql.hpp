@@ -4,4 +4,6 @@
 #include <sqlite3.h>
 #include "../files/filesystem.hpp"
 
-void LoadSQLite(Arguments args, Options options);
+void CreateSettingsDB();
+void LoadSettingsDB();
+string SettingValue(const string& settingName);
