@@ -1,14 +1,15 @@
 #include "help.hpp"
 
 void PrintHelp(Arguments args, Options options){
-    std::cout << "SeaShell Help" << std::endl;
-    std::cout << "Usage: [command] [arguments] [options]" << std::endl;
-    std::cout << "Commands:" << std::endl;
-    std::cout << "  cd [path] - Change the current working directory" << std::endl;
-    std::cout << "  ls [path] - List the contents of a directory" << std::endl;
-    std::cout << "  mkdir [path] - Create a new directory" << std::endl;
-    std::cout << "  touch [path] - Create a new file" << std::endl;
-    std::cout << "  rm [path] - Remove a file" << std::endl;
-    std::cout << "  rmdir [path] - Remove a directory" << std::endl;
-    std::cout << "  help - Display this help message" << std::endl;
+    Print(Color::YELLOW, "SeaShell Help\n");
+    Print(Color::DEFAULT, "Usage: [command] [arguments] [options]\n\n");
+    Print(Color::CYAN, "Commands:\n");
+    Print(Color::GREEN, "  help", Color::DEFAULT, "- Display this help message.\n");
+    Print(Color::GREEN, "  cd [path]", Color::DEFAULT, "- Change the current working directory.\n");
+    Print(Color::GREEN, "  ls", Color::DEFAULT, "- List the contents of the current directory.\n");
+    Print(Color::GREEN, "  mkdir [path]", Color::DEFAULT, "- Create a new directory.\n");
+    Print(Color::GREEN, "  touch [path]", Color::DEFAULT, "- Create a new file.\n");
+    Print(Color::GREEN, "  rm [path]", Color::DEFAULT, "- Remove a file.\n");
+    Print(Color::GREEN, "  rmdir [path]", Color::DEFAULT, "- Remove a directory.\n");
+    cout << std::endl;
 }

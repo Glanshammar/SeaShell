@@ -25,11 +25,11 @@ template<typename T, typename... Args>
 void Print(T firstArg, Args... args) {
     if constexpr (std::is_same_v<T, Color>) {
         setColor(firstArg);
-        qPrint(args...);
+        Print(args...);
         setColor(Color::DEFAULT); // Reset color to default after printing
     } else {
         std::cout << firstArg << " ";
-        qPrint(args...);
+        Print(args...);
     }
 }
 
