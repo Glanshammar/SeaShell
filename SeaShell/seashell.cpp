@@ -51,9 +51,7 @@ int main() {
     ChangeDirectory({"~"}, {});
 
     while (true) {
-        setColor(Color::CYAN);
-        std::cout << CurrentDir;
-        setColor(Color::DEFAULT);
+        Print(Color::CYAN, CurrentDir);
         std::cout << " >> " << std::flush;
 
         std::getline(std::cin, input);
