@@ -1,4 +1,3 @@
-#include <map>
 #include <functional>
 #include "global.hpp"
 #include "functions.hpp"
@@ -9,7 +8,6 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"exec", ExecuteFile},
         {"ssh", ConnectToSSH},
         {"py", RunPythonScript},
-        {"poco", POCOLoggingTest},
         {"cd", ChangeDirectory},
         {"ls", ListDirectoryContents},
         {"mkdir", CreateFolder},
@@ -55,7 +53,7 @@ int main() {
     while (true) {
         setColor(Color::CYAN);
         std::cout << CurrentDir;
-        setColor(Color::WHITE);
+        setColor(Color::DEFAULT);
         std::cout << " >> " << std::flush;
 
         std::getline(std::cin, input);
@@ -99,7 +97,7 @@ int main() {
                 ++it;
             }
         }
-        
+
         if (functionMap.contains(command)) {
             functionMap[command](tokens, options);
         } else {

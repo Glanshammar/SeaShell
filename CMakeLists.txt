@@ -70,7 +70,6 @@ add_executable(SeaShell
         "SeaShell/seashell.cpp" "SeaShell/functions.hpp"
         "SeaShell/files/execute.cpp" "SeaShell/files/execute.hpp"
         "SeaShell/files/python.cpp" "SeaShell/files/python.hpp"
-        "SeaShell/pocotest.cpp" "SeaShell/pocotest.hpp"
         "SeaShell/files/encrypt.cpp" "SeaShell/files/encrypt.hpp"
         "SeaShell/networking/ssh.cpp" "SeaShell/networking/ssh.hpp"
         "SeaShell/networking/clientsend.cpp" "SeaShell/networking/clientsend.hpp"
