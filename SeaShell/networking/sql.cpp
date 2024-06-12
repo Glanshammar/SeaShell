@@ -39,6 +39,8 @@ void CreateSettingsDB(){
 
     std::vector<char> settings;
     appendToSettings(settings, "INSERT INTO settings (setting, value) VALUES ('default_color', 'RED');");
+    appendToSettings(settings, "INSERT INTO settings (setting, value) VALUES ('folder_color', 'BLUE');");
+    appendToSettings(settings, "INSERT INTO settings (setting, value) VALUES ('file_color', 'GREEN');");
 
     // Execute each SQL statement
     const char *sql = settings.data();
