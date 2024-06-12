@@ -8,6 +8,10 @@ string getHomeDirectory() {
 #endif
 }
 
+std::map<std::string, std::string> directories = {
+        {"home", getHomeDirectory()},
+};
+
 void ChangeDirectory(Arguments args, Options options) {
     if (args.empty()) {
         cout << "No path provided." << std::endl;
@@ -17,13 +21,14 @@ void ChangeDirectory(Arguments args, Options options) {
 
     string path = std::accumulate(args.begin(), args.end(), std::string(),
                                        [](const std::string& a, const std::string& b) -> std::string {
-                                           return a + (a.length() > 0 ? " " : "") + b;
+                                           return a + (!a.empty() ? " " : "") + b;
                                        });
 
     int result = -1;
 
-    if (path == "~" || path == "user") {
-        result = ChangeDir(getHomeDirectory().c_str());
+    auto it = directories.find(path);
+    if (it != directories.end()) {
+        result = ChangeDir(it->second.c_str());
     } else {
         result = ChangeDir(path.c_str());
     }
