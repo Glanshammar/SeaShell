@@ -17,14 +17,11 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"mv", FileMove},
         {"cp", FileCopy},
         {"ip", ListInterfaces},
-        {"sql", LoadSQLite},
 };
 
-
-void SetupConsoleWindow() {
+void Setup() {
 #if defined(_WIN32) || defined(_WIN64)
     SetConsoleTitle(TEXT("SeaShell"));
-    HWND hwnd = GetConsoleWindow();
 
     auto iconDeleter = [](HICON hIcon) {
         if (hIcon) {
@@ -38,21 +35,31 @@ void SetupConsoleWindow() {
     );
 
     if (hIcon) {
+        HWND hwnd = GetConsoleWindow();
         SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon.get());
     } else {
         std::cerr << "Failed to load icon" << std::endl;
     }
+#else // Linux
+    std::cout << "\033]0;SeaShell\007";
 #endif
+
+    if(!std::filesystem::exists("settings.db")){
+        CreateSettingsDB();
+    }
+    LoadSettingsDB();
 }
 
 int main() {
-    SetupConsoleWindow();
+    Setup();
+
+    Color defaultColor = getColor(SettingValue("default_color"));
 
     string input;
-    ChangeDirectory({"~"}, {});
+    ChangeDirectory({"home"}, {});
 
     while (true) {
-        Print(Color::CYAN, CurrentDir);
+        Print(defaultColor, CurrentDir);
         std::cout << " >> " << std::flush;
 
         std::getline(std::cin, input);
