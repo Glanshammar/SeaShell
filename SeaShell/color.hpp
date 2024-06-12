@@ -15,6 +15,29 @@ enum class Color {
 
 void setColor(Color color);
 
+inline Color getColor(const std::string& colorStr) {
+    std::string color = colorStr;
+    std::transform(color.begin(), color.end(), color.begin(), ::tolower);
+
+    if (color == "red") {
+        return Color::RED;
+    } else if (color == "green") {
+        return Color::GREEN;
+    } else if (color == "blue") {
+        return Color::BLUE;
+    } else if (color == "yellow") {
+        return Color::YELLOW;
+    } else if (color == "cyan") {
+        return Color::CYAN;
+    } else if (color == "magenta") {
+        return Color::MAGENTA;
+    } else if (color == "white") {
+        return Color::WHITE;
+    } else {
+        return Color::DEFAULT;
+    }
+}
+
 template<typename T>
 void Print(T arg) {
     std::cout << arg;
