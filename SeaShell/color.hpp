@@ -55,4 +55,3 @@ void Print(T firstArg, Args... args) {
         Print(args...);
     }
 }
-
