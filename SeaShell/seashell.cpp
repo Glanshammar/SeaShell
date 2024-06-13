@@ -1,6 +1,7 @@
 #include <functional>
 #include "global.hpp"
 #include "functions.hpp"
+#include "networking/sql.hpp"
 
 
 std::map<std::string, std::function<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
@@ -18,6 +19,7 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"cp", FileCopy},
         {"ip", ListInterfaces},
 };
+
 
 void Setup() {
 #if defined(_WIN32) || defined(_WIN64)
@@ -43,23 +45,16 @@ void Setup() {
 #else // Linux
     std::cout << "\033]0;SeaShell\007";
 #endif
-
-    if(!std::filesystem::exists("settings.db")){
-        CreateSettingsDB();
-    }
-    LoadSettingsDB();
 }
 
 int main() {
     Setup();
 
-    Color defaultColor = getColor(SettingValue("default_color"));
-
     string input;
     ChangeDirectory({"home"}, {});
 
     while (true) {
-        Print(defaultColor, CurrentDir);
+        Print(Color::CYAN, CurrentDir);
         std::cout << " >> " << std::flush;
 
         std::getline(std::cin, input);
