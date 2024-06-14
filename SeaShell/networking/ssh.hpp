@@ -2,6 +2,11 @@
 
 #include "../global.hpp"
 #include <libssh2.h>
+#include <libssh2_sftp.h>
+#include <libssh2_publickey.h>
+#include <cerrno>
+
+
 
 #ifdef _WIN32
 #include <WinSock2.h>
@@ -20,4 +25,4 @@ using socket_t = SOCKET;
 using socket_t = int;
 #endif
 
-void ConnectToSSH(Arguments args, Options options);
+void StartSSHServer(Arguments args, Options options);
