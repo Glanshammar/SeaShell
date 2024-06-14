@@ -47,6 +47,7 @@ find_package(Boost REQUIRED COMPONENTS
         log
         math
         program_options
+        process
         python
         random
         regex
@@ -106,6 +107,7 @@ set(BOOST_LIBS
         Boost::log
         Boost::math
         Boost::program_options
+        Boost::process
         Boost::python
         Boost::random
         Boost::regex
