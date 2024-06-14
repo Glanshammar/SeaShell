@@ -40,13 +40,21 @@ void Setup() {
     std::wstring iconFileName = dirPath + L"mandala.ico";
 
     // Load the icon from file
-    auto hIcon = (HICON)LoadImage(nullptr, iconFileName.c_str(), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
-    if (hIcon) {
-        // Set icon for the console window
-        HWND hwnd = GetConsoleWindow();
-        SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-    } else {
+    auto hIcon = static_cast<HICON>(LoadImage(nullptr, iconFileName.c_str(), IMAGE_ICON, 0, 0, LR_LOADFROMFILE));
+    if (!hIcon) {
         std::cerr << "Failed to load icon" << std::endl;
+        return;
+    }
+
+    // Create a unique pointer with a custom deleter for the icon handle
+    std::unique_ptr<std::remove_pointer<HICON>::type, decltype(&DestroyIcon)> iconUnique(hIcon, &DestroyIcon);
+
+    // Set icon for the console window
+    HWND hwnd = GetConsoleWindow();
+    if (hwnd) {
+        SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(iconUnique.get()));
+    } else {
+        std::cerr << "Failed to get console window handle" << std::endl;
     }
 #else // Linux
     std::cout << "\033]0;SeaShell\007";
