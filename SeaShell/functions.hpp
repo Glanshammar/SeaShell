@@ -10,5 +10,6 @@
 #include "help.hpp"
 #include "networking/ip.hpp"
 #include "networking/sql.hpp"
+#include "files/zip.hpp"
 
 #endif //FUNCTIONS_HPP

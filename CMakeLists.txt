@@ -27,6 +27,7 @@ endif()
 
 
 find_package(CURL CONFIG REQUIRED)
+find_package(libzippp CONFIG REQUIRED)
 find_package(FreeRDP CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Python REQUIRED COMPONENTS Development)
@@ -79,6 +80,7 @@ add_executable(SeaShell
         "SeaShell/help.cpp" "SeaShell/help.hpp"
         "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
         "SeaShell/networking/sql.cpp" "SeaShell/networking/sql.hpp"
+        "SeaShell/files/zip.cpp" "SeaShell/files/zip.hpp"
 )
 
 set(POCO_LIBS
@@ -116,6 +118,7 @@ set(BOOST_LIBS
         Boost::timer
 )
 
+
 target_link_libraries(SeaShell
         PUBLIC
         Ws2_32
@@ -127,5 +130,6 @@ target_link_libraries(SeaShell
         OpenSSL::SSL
         OpenSSL::Crypto
         SQLite::SQLite3
+        libzippp::libzippp
         $<IF:$<TARGET_EXISTS:Libssh2::libssh2_shared>,Libssh2::libssh2_shared,Libssh2::libssh2_static>
 )
