@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project("SeaShell")
+project("SeaShell" VERSION 0.3)
 set(CMAKE_CXX_STANDARD 20)
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 if(WIN32)
@@ -8,6 +8,7 @@ elseif(UNIX)
     set(USER_HOME $ENV{HOME})
 endif()
 set(CMAKE_TOOLCHAIN_FILE "${USER_HOME}/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+link_directories("${USER_HOME}/.vcpkg-clion/vcpkg/installed/x64-windows/debug/lib")
 
 
 if(NOT USER_HOME)
@@ -15,19 +16,10 @@ if(NOT USER_HOME)
 endif()
 
 option(USE_MYSQL "Use MySQL" ON)
-
-
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message("Building in Debug mode")
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    message("Building in Release mode")
-else()
-    message("Unknown build type: ${CMAKE_BUILD_TYPE}")
-endif()
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 
 find_package(CURL CONFIG REQUIRED)
-find_package(libzippp CONFIG REQUIRED)
 find_package(FreeRDP CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Python REQUIRED COMPONENTS Development)
@@ -57,14 +49,17 @@ find_package(Boost REQUIRED COMPONENTS
         thread
         timer
 )
-find_package(Poco REQUIRED
+find_package(Poco REQUIRED COMPONENTS
         Foundation
         Util
         Net
         XML
         JSON
-        Data
         Crypto
+        Data
+        Zip
+        MongoDB
+        Redis
 )
 
 
@@ -91,7 +86,11 @@ set(POCO_LIBS
         Poco::JSON
         Poco::Data
         Poco::Crypto
+        Poco::Zip
+        Poco::MongoDB
+        Poco::Redis
 )
+
 
 set(BOOST_LIBS
         Boost::atomic
@@ -130,6 +129,5 @@ target_link_libraries(SeaShell
         OpenSSL::SSL
         OpenSSL::Crypto
         SQLite::SQLite3
-        libzippp::libzippp
         $<IF:$<TARGET_EXISTS:Libssh2::libssh2_shared>,Libssh2::libssh2_shared,Libssh2::libssh2_static>
 )
