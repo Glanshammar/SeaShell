@@ -3,6 +3,8 @@
 #include "../global.hpp"
 #include "../color.hpp"
 #include <numeric>
+#include <regex>
+
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <direct.h>
@@ -23,3 +25,4 @@ void RemoveFile(Arguments args, Options options);
 void RemoveFolder(Arguments args, Options options);
 void FileCopy(Arguments args, Options options);
 void FileMove(Arguments args, Options options);
+void FindFiles(Arguments args, Options options);

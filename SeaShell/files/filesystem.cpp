@@ -226,3 +226,28 @@ void FileCopy(Arguments args, Options options) {
         std::cerr << "Error copying file: " << e.what() << std::endl;
     }
 }
+
+void FindFiles(Arguments args, Options options){
+
+    string currentDirectory = std::filesystem::current_path().string();
+    const string& pattern = args[0];
+    std::regex regex_pattern(pattern);
+
+    try {
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(currentDirectory, std::filesystem::directory_options::skip_permission_denied)) {
+            try {
+                if (std::filesystem::is_regular_file(entry.status()) && std::regex_search(entry.path().string(), regex_pattern)) {
+                    std::cout << entry.path() << std::endl;
+                }
+            } catch (const std::filesystem::filesystem_error& e) {
+                continue;
+            } catch (const std::regex_error& e) {
+                std::cerr << "Regex error: " << e.what() << std::endl;
+                return;
+            }
+        }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
+        return;
+    }
+}
