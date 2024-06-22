@@ -1,5 +1,5 @@
 # SeaShell: Enhancing the Command-Line Experience
-SeaShell aims to redefine the command-line interface experience with its ambitious vision. While drawing inspiration from established shells, it's currently a work-in-progress, striving to integrate familiar functionalities with a sleek interface and formidable capabilities. Though not fully realized yet, SeaShell is on a path toward revolutionizing the command-line experience.
+SeaShell is a terminal emulator with additional shell functionality, and it aims to enhance the command-line interface experience. While drawing inspiration from established shells, it's currently a work-in-progress, striving to integrate familiar functionalities with a sleek interface and formidable capabilities. Though not fully realized yet, SeaShell is on a path toward revolutionizing the command-line experience.
 
 # Features (Work-in-Progress)
 * **Cross-Platform Compatibility:** Works seamlessly across various operating systems.
