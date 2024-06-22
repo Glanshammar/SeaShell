@@ -18,6 +18,7 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
         {"ip", ListInterfaces},
         {"zip", ZIP},
         {"unzip", UnZIP},
+        {"find", FindFiles},
 };
 
 void Setup() {
@@ -38,25 +39,33 @@ void Setup() {
     std::wstring dirPath = exePath.substr(0, pos + 1);
 
     // Specify the name of the icon file (assuming it's in the same directory as the executable)
-    std::wstring iconFileName = dirPath + L"mandala.ico";
+    std::wstring iconFileName = dirPath + L"sea.ico";
 
     // Load the icon from file
-    auto hIcon = static_cast<HICON>(LoadImage(nullptr, iconFileName.c_str(), IMAGE_ICON, 0, 0, LR_LOADFROMFILE));
+    HICON hIcon = static_cast<HICON>(LoadImage(
+            nullptr,
+            iconFileName.c_str(),
+            IMAGE_ICON,
+            0,
+            0,
+            LR_LOADFROMFILE | LR_DEFAULTSIZE | LR_SHARED
+    ));
+
     if (!hIcon) {
         std::cerr << "Failed to load icon" << std::endl;
         return;
     }
 
-    // Create a unique pointer with a custom deleter for the icon handle
-    std::unique_ptr<std::remove_pointer<HICON>::type, decltype(&DestroyIcon)> iconUnique(hIcon, &DestroyIcon);
-
-    // Set icon for the console window
+    // Set the icon for the console window
     HWND hwnd = GetConsoleWindow();
     if (hwnd) {
-        SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(iconUnique.get()));
+        // Set both small and large icons
+        SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(hIcon));
+        SendMessage(hwnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(hIcon));
     } else {
         std::cerr << "Failed to get console window handle" << std::endl;
     }
+
 #else // Linux
     std::cout << "\033]0;SeaShell\007";
 #endif
@@ -70,7 +79,7 @@ int main() {
 
     while (true) {
         Print(Color::CYAN, CurrentDir);
-        std::cout << " >> " << std::flush;
+        cout << " >> " << std::flush;
 
         std::getline(std::cin, input);
 
