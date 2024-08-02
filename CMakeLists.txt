@@ -2,23 +2,31 @@ cmake_minimum_required(VERSION 3.28)
 project("SeaShell" VERSION 0.3)
 set(CMAKE_CXX_STANDARD 20)
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+option(USE_MYSQL "Use MySQL" ON)
+
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
+    add_definitions(-DWIN32_LEAN_AND_MEAN)
 elseif(UNIX)
     set(USER_HOME $ENV{HOME})
 endif()
-set(CMAKE_TOOLCHAIN_FILE "${USER_HOME}/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
-link_directories("${USER_HOME}/.vcpkg-clion/vcpkg/installed/x64-windows/debug/lib")
-
 
 if(NOT USER_HOME)
     message(FATAL_ERROR "Could not determine the user's home directory")
 endif()
 
-option(USE_MYSQL "Use MySQL" ON)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+
+set(VCPKG_DIR "${USER_HOME}/.vcpkg-clion/vcpkg")
+set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+link_directories("${VCPKG_DIR}/installed/x64-windows/debug/lib")
 
 
+set(VistaInclude "${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista")
+include_directories(${VistaInclude})
+
+# vcpkg packages
 find_package(CURL CONFIG REQUIRED)
 find_package(FreeRDP CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -55,7 +63,6 @@ find_package(Poco REQUIRED COMPONENTS
         Net
         XML
         JSON
-        Crypto
         Data
         Zip
         MongoDB
@@ -85,7 +92,6 @@ set(POCO_LIBS
         Poco::XML
         Poco::JSON
         Poco::Data
-        Poco::Crypto
         Poco::Zip
         Poco::MongoDB
         Poco::Redis
@@ -117,6 +123,7 @@ set(BOOST_LIBS
         Boost::timer
 )
 
+set(VistaLib "${USER_HOME}/CLionProjects/VistaFramework/cmake-build-release/VistaFramework.lib")
 
 target_link_libraries(SeaShell
         PUBLIC
@@ -124,6 +131,7 @@ target_link_libraries(SeaShell
         ${Python_LIBRARIES}
         ${POCO_LIBS}
         ${BOOST_LIBS}
+        ${VistaLib}
         CURL::libcurl
         freerdp
         OpenSSL::SSL
@@ -131,3 +139,10 @@ target_link_libraries(SeaShell
         SQLite::SQLite3
         $<IF:$<TARGET_EXISTS:Libssh2::libssh2_shared>,Libssh2::libssh2_shared,Libssh2::libssh2_static>
 )
+
+if(USE_MYSQL)
+    target_link_libraries(SeaShell
+            PUBLIC
+            "C:/Program Files/MySQL/MySQL Server 8.4/lib/mysqlclient.lib")
+    include_directories("C:/Program Files/MySQL/MySQL Server 8.4/include")
+endif()
