@@ -1,10 +1,9 @@
 #pragma once
 
-#ifdef _WIN32
-#include <WinSock2.h>
-#include <Windows.h>
-#include <process.h>
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #endif
+
 
 #include <vector>
 #include <iostream>
