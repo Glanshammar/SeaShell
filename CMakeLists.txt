@@ -18,7 +18,7 @@ if(NOT USER_HOME)
 endif()
 
 
-set(VCPKG_DIR "${USER_HOME}/.vcpkg-clion/vcpkg")
+set(VCPKG_DIR "${USER_HOME}/.vcpkg-clion/SeaShell")
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 link_directories("${VCPKG_DIR}/installed/x64-windows/debug/lib")
 
