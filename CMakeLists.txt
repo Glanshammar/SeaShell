@@ -30,33 +30,8 @@ include_directories(${VistaInclude})
 find_package(CURL CONFIG REQUIRED)
 find_package(FreeRDP CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
-find_package(Python REQUIRED COMPONENTS Development)
 find_package(Libssh2 CONFIG REQUIRED)
 find_package(SQLite3 REQUIRED)
-find_package(Boost REQUIRED COMPONENTS
-        atomic
-        chrono
-        container
-        context
-        coroutine
-        date_time
-        exception
-        filesystem
-        graph
-        iostreams
-        locale
-        log
-        math
-        program_options
-        process
-        python
-        random
-        regex
-        serialization
-        system
-        thread
-        timer
-)
 find_package(Poco REQUIRED COMPONENTS
         Foundation
         Util
@@ -97,32 +72,6 @@ set(POCO_LIBS
         Poco::Redis
 )
 
-
-set(BOOST_LIBS
-        Boost::atomic
-        Boost::chrono
-        Boost::container
-        Boost::context
-        Boost::coroutine
-        Boost::date_time
-        Boost::exception
-        Boost::filesystem
-        Boost::graph
-        Boost::iostreams
-        Boost::locale
-        Boost::log
-        Boost::math
-        Boost::program_options
-        Boost::process
-        Boost::python
-        Boost::random
-        Boost::regex
-        Boost::serialization
-        Boost::system
-        Boost::thread
-        Boost::timer
-)
-
 set(VistaLib "${USER_HOME}/CLionProjects/VistaFramework/cmake-build-release/VistaFramework.lib")
 
 target_link_libraries(SeaShell
@@ -130,7 +79,6 @@ target_link_libraries(SeaShell
         Ws2_32
         ${Python_LIBRARIES}
         ${POCO_LIBS}
-        ${BOOST_LIBS}
         ${VistaLib}
         CURL::libcurl
         freerdp
