@@ -3,7 +3,6 @@
 #include "global.hpp"
 #include "functions.hpp"
 #include "networking/sql.hpp"
-#include <mysql.h>
 
 std::map<std::string, std::function<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
         {"help", PrintHelp},
