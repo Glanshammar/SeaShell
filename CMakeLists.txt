@@ -24,7 +24,12 @@ link_directories("${VCPKG_DIR}/installed/x64-windows/debug/lib")
 
 
 set(VistaInclude "${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista")
-include_directories(${VistaInclude})
+set(PythonInclude "${USER_HOME}/AppData/Local/Programs/Python/Python312/include")
+set(PythonLibrary "${USER_HOME}/AppData/Local/Programs/Python/Python312/libs/python312.lib")
+include_directories(
+        ${VistaInclude}
+        ${PythonInclude}
+)
 
 # vcpkg packages
 find_package(CURL CONFIG REQUIRED)
@@ -77,7 +82,7 @@ set(VistaLib "${USER_HOME}/CLionProjects/VistaFramework/cmake-build-release/Vist
 target_link_libraries(SeaShell
         PUBLIC
         Ws2_32
-        ${Python_LIBRARIES}
+        ${PythonLibrary}
         ${POCO_LIBS}
         ${VistaLib}
         CURL::libcurl
