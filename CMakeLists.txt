@@ -33,10 +33,8 @@ include_directories(
 
 # vcpkg packages
 find_package(CURL CONFIG REQUIRED)
-find_package(FreeRDP CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Libssh2 CONFIG REQUIRED)
-find_package(SQLite3 REQUIRED)
 find_package(Poco REQUIRED COMPONENTS
         Foundation
         Util
@@ -61,7 +59,6 @@ add_executable(SeaShell
         "SeaShell/color.cpp" "SeaShell/color.hpp"
         "SeaShell/help.cpp" "SeaShell/help.hpp"
         "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
-        "SeaShell/networking/sql.cpp" "SeaShell/networking/sql.hpp"
         "SeaShell/files/zip.cpp" "SeaShell/files/zip.hpp"
 )
 
@@ -86,11 +83,9 @@ target_link_libraries(SeaShell
         ${POCO_LIBS}
         ${VistaLib}
         CURL::libcurl
-        freerdp
         OpenSSL::SSL
         OpenSSL::Crypto
-        SQLite::SQLite3
-        $<IF:$<TARGET_EXISTS:Libssh2::libssh2_shared>,Libssh2::libssh2_shared,Libssh2::libssh2_static>
+        Libssh2::libssh2
 )
 
 if(USE_MYSQL)
