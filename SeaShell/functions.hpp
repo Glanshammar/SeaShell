@@ -1,5 +1,4 @@
-#ifndef FUNCTIONS_HPP
-#define FUNCTIONS_HPP
+#pragma once
 
 //Includes all the headers of in the /functions directory.
 #include "files/execute.hpp"
@@ -11,5 +10,3 @@
 #include "networking/ip.hpp"
 #include "networking/sql.hpp"
 #include "files/zip.hpp"
-
-#endif //FUNCTIONS_HPP
