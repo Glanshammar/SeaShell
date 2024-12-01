@@ -11,25 +11,20 @@ SeaShell is a console application, and it aims to enhance the command-line inter
 # Build Instructions
 The CMake file in this (root) directory is for building the project.
 Under the "Libraries" directory, there's another CMakeLists file for helping with the dependencies.
+Run the CMake file to build the whole project.
 
 ## Dependencies
-**Dependencies are built and installed using vcpkg.**
+***Standalone Dependencies***
 * **CMake:** 3.28 or higher
-* **C++ Compiler:** GCC 14 (Linux), MSVC v143 (Windows)
-* **Boost 1.85**
-* **POCO 1.13.3**
-* **OpenSSL 3.3.0**
-* **curl 8.8.0**
-* **libssh-2 1.11**
-* **python 3.11 (vcpkg version, included in Boost)**
-* **FreeRDP 3.4.0**
-* **SQLite 3.46**
-
-***Other Dependencies***
-
-*These are standalone dependencies and are not installed through vcpkg.*
+* **C++ Compiler:** GCC 14 (Linux), MSVC latest (Windows)
 * **MySQL:** 8.4 or higher (Optional, install Server community edition from https://dev.mysql.com/downloads/mysql/)
+* **Python 3.13**
 
+***vcpkg dependencies.***
+* **POCO 1.13.3**
+* **OpenSSL 3.4.0**
+* **curl 8.11.0**
+* **libssh-2 1.11**
 
 # License
 Distributed under the MIT License. See LICENSE for more information.
