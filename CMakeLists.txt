@@ -4,7 +4,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-option(USE_MYSQL "Use MySQL" ON)
+set(USE_MYSQL ON)
+set(MYSQL_VERSION "9.1")
+set(WINDOWS_SDK_VERSION "10.0.22621.0")
 
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
@@ -17,19 +19,20 @@ if(NOT USER_HOME)
     message(FATAL_ERROR "Could not determine the user's home directory")
 endif()
 
-
 set(VCPKG_DIR "${USER_HOME}/.vcpkg-clion/SeaShell")
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 link_directories("${VCPKG_DIR}/installed/x64-windows/debug/lib")
 
-
-set(VistaInclude "${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista")
-set(PythonInclude "${USER_HOME}/AppData/Local/Programs/Python/Python312/include")
-set(PythonLibrary "${USER_HOME}/AppData/Local/Programs/Python/Python312/libs/python312.lib")
 include_directories(
-        ${VistaInclude}
-        ${PythonInclude}
+        "${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista" #Vista Include
+        "${USER_HOME}/AppData/Local/Programs/Python/Python312/include" #Python Include
 )
+
+if(WIN32)
+    include_directories(
+            "C:/Program Files (x86)/Windows Kits/10/Include/${WINDOWS_SDK_VERSION}/" #Windows headers
+    )
+endif()
 
 # vcpkg packages
 find_package(CURL CONFIG REQUIRED)
@@ -46,7 +49,6 @@ find_package(Poco REQUIRED COMPONENTS
         MongoDB
         Redis
 )
-
 
 add_executable(SeaShell
         "SeaShell/global.cpp" "SeaShell/global.hpp"
@@ -75,11 +77,12 @@ set(POCO_LIBS
 )
 
 set(VistaLib "${USER_HOME}/CLionProjects/VistaFramework/cmake-build-release/VistaFramework.lib")
+set(PythonLib "${USER_HOME}/AppData/Local/Programs/Python/Python312/libs/python312.lib")
 
 target_link_libraries(SeaShell
         PUBLIC
         Ws2_32
-        ${PythonLibrary}
+        ${PythonLib}
         ${POCO_LIBS}
         ${VistaLib}
         CURL::libcurl
@@ -89,8 +92,20 @@ target_link_libraries(SeaShell
 )
 
 if(USE_MYSQL)
-    target_link_libraries(SeaShell
-            PUBLIC
-            "C:/Program Files/MySQL/MySQL Server 8.4/lib/mysqlclient.lib")
-    include_directories("C:/Program Files/MySQL/MySQL Server 8.4/include")
+    set(MYSQL_LIB_PATH "C:/Program Files/MySQL/MySQL Server ${MYSQL_VERSION}/lib/mysqlclient.lib")
+    set(MYSQL_INCLUDE_PATH "C:/Program Files/MySQL/MySQL Server ${MYSQL_VERSION}/include")
+
+    if(EXISTS ${MYSQL_LIB_PATH})
+        target_link_libraries(SeaShell PUBLIC ${MYSQL_LIB_PATH})
+        message("-- MySQL library found: " ${MYSQL_LIB_PATH})
+    else()
+        message(WARNING "MySQL library not found at ${MYSQL_LIB_PATH}")
+    endif()
+
+    if(IS_DIRECTORY ${MYSQL_INCLUDE_PATH})
+        include_directories(${MYSQL_INCLUDE_PATH})
+        message("-- MySQL includes found: " ${MYSQL_INCLUDE_PATH})
+    else()
+        message(WARNING "MySQL include directory not found at ${MYSQL_INCLUDE_PATH}")
+    endif()
 endif()
