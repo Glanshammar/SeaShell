@@ -1,5 +1,23 @@
 #include "zip.hpp"
 
+void addDirectoryToZip(Compress& zipper, const string& dirPath, const string& currentPath) {
+    Poco::DirectoryIterator it(dirPath);
+    Poco::DirectoryIterator end;
+
+    while (it != end) {
+        Path filePath(it.path());
+        string relativePath = currentPath.empty() ? filePath.getFileName() : currentPath + "/" + filePath.getFileName();
+
+        if (it->isDirectory()) {
+            // Recursively add subdirectories
+            addDirectoryToZip(zipper, it.path().toString(), relativePath);
+        } else {
+            // Add file to the ZIP archive
+            zipper.addFile(filePath, relativePath);
+        }
+        ++it;
+    }
+}
 
 void ZIP(Arguments args, Options options) {
     if (args.size() != 2) {
@@ -7,7 +25,7 @@ void ZIP(Arguments args, Options options) {
         return;
     }
 
-    try{
+    try {
         const string& source = args[0];
         const string& target = args[1];
 
@@ -16,14 +34,20 @@ void ZIP(Arguments args, Options options) {
         // Create a Compress object with the output stream
         Compress zipper(out, true); // true for seekable output stream (local file)
 
-        // Add a single file to the ZIP archive
-        Path file(source);
-        zipper.addFile(file, source);
+        Poco::File sourceFile(source);
+        if (sourceFile.isDirectory()) {
+            // If the source is a directory, add all its contents recursively
+            addDirectoryToZip(zipper, source, "");
+        } else {
+            // If the source is a file, add it directly
+            Path file(source);
+            zipper.addFile(file, file.getFileName());
+        }
 
         // Close the Compress object to finalize the ZIP file
         zipper.close();
 
-        cout << "File compressed successfully." << std::endl;
+        cout << "Compression completed successfully." << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return;

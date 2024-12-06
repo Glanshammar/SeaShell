@@ -5,6 +5,7 @@
 #include <Poco/Zip/Decompress.h>
 #include <Poco/Zip/ZipArchive.h>
 #include <Poco/Path.h>
+#include <Poco/DirectoryIterator.h>
 
 
 using namespace Poco;
