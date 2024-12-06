@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../global.hpp"
-#include "../color.hpp"
 #include <numeric>
 #include <regex>
 

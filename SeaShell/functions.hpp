@@ -5,7 +5,6 @@
 #include "files/python.hpp"
 #include "files/encrypt.hpp"
 #include "files/filesystem.hpp"
-#include "color.hpp"
 #include "help.hpp"
 #include "networking/ip.hpp"
 #include "networking/sql.hpp"

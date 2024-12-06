@@ -59,18 +59,21 @@ void ListDirectoryContents(Arguments args, Options options) {
         }
 
         for (const auto &entry : iterator) {
+            /*
             if (std::filesystem::is_directory(entry.status())) {
                 setColor(Color::GREEN);
             } else if (std::filesystem::is_regular_file(entry.status())) {
                 setColor(Color::YELLOW);
             }
+            */
             cout << entry.path().filename().string() << std::endl;
         }
     } catch (const std::filesystem::filesystem_error &e) {
-        Print(Color::RED, "Error accessing directory: ", e.what());
+        // Print(Color::RED, "Error accessing directory: ", e.what());
+        cout << e.what() << std::endl;
     }
 
-    setColor(Color::DEFAULT);
+    // setColor(Color::DEFAULT);
 }
 
 void CreateFolder(Arguments args, Options options) {
@@ -89,18 +92,22 @@ void CreateFolder(Arguments args, Options options) {
 
     try {
         if (std::filesystem::create_directory(path)) {
-            Print(Color::GREEN, "Directory created successfully: ", Color::DEFAULT, path);
+            //Print(Color::GREEN, "Directory created successfully: ", Color::DEFAULT, path);
+            cout << "Created directory " << path << std::endl;
         } else {
-            Print(Color::RED, "Failed to create directory: ", Color::DEFAULT, path);
+            //Print(Color::RED, "Failed to create directory: ", Color::DEFAULT, path);
+            cout << "Failed to create directory " << path << std::endl;
         }
     } catch (const std::filesystem::filesystem_error &e) {
-        Print(Color::RED, "Error creating directory: ", e.what());
+        //Print(Color::RED, "Error creating directory: ", e.what());
+        cout << e.what() << std::endl;
     }
 }
 
 void AddFile(Arguments args, Options options) {
     if (args.empty()) {
-        Print(Color::RED, "No file path provided.");
+        //Print(Color::RED, "No file path provided.");
+        cout << "No file path provided." << std::endl;
         return;
     }
 
@@ -125,14 +132,14 @@ void AddFile(Arguments args, Options options) {
         // Create and open the file
         std::ofstream file(path);
         if (file) {
-            setColor(Color::GREEN);
+            //setColor(Color::GREEN);
             cout << "File created successfully: " << std::flush;
-            setColor(Color::WHITE);
+            //setColor(Color::WHITE);
             cout << path << std::endl;
         } else {
-            setColor(Color::RED);
+            //setColor(Color::RED);
             std::cerr << "Failed to create file: " << std::flush;
-            setColor(Color::WHITE);
+            //setColor(Color::WHITE);
             std::cerr << path << std::endl;
         }
     } catch (const std::filesystem::filesystem_error &e) {
