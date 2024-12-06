@@ -26,9 +26,9 @@ auto UniquePtr(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
-#define Arguments const std::vector<std::string>&
-#define Options const std::vector<std::string>&
-#define CurrentDir std::filesystem::current_path().string()
+using Arguments = const std::vector<std::string>&;
+using Options = const std::vector<std::string>&;
+#define CurrentDirectory std::filesystem::current_path().string()
 
 using std::string;
 using std::vector;

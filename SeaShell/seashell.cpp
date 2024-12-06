@@ -1,5 +1,5 @@
 #include <functional>
-#include <VApplication>
+// #include <VApplication>
 #include "global.hpp"
 #include "functions.hpp"
 #include "networking/sql.hpp"
@@ -24,15 +24,14 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
 
 
 int main() {
-    VApplication::setIcon("C:/Users/Mondus/Pictures/Programs/mandala.ico");
-    VApplication::setTitleBar("SeaShell");
+    // VApplication::setIcon("C:/Users/Mondus/Pictures/Programs/mandala.ico");
+    // VApplication::setTitleBar("SeaShell");
 
     string input;
     ChangeDirectory({"home"}, {});
 
     while (true) {
-        Print(Color::CYAN, CurrentDir);
-        cout << " >> " << std::flush;
+        cout << CurrentDirectory << " >> " << std::flush;
 
         std::getline(std::cin, input);
 
