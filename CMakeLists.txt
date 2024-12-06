@@ -7,6 +7,8 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(USE_MYSQL ON)
 set(MYSQL_VERSION "9.1")
 set(WINDOWS_SDK_VERSION "10.0.22621.0")
+set(PYTHON_VERSION "3.13")
+string(REPLACE "." "" PYTHON_VERSION_NO_DOT ${PYTHON_VERSION}) #Remove the dot from the Python version, to make it work with Python paths
 
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
@@ -24,8 +26,8 @@ set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake" CACHE S
 link_directories("${VCPKG_DIR}/installed/x64-windows/debug/lib")
 
 include_directories(
-        "${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista" #Vista Include
-        "${USER_HOME}/AppData/Local/Programs/Python/Python312/include" #Python Include
+        #"${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista" #Vista Include
+        "${USER_HOME}/AppData/Local/Programs/Python/Python${PYTHON_VERSION_NO_DOT}/include" #Python Include
 )
 
 if(WIN32)
@@ -58,7 +60,6 @@ add_executable(SeaShell
         "SeaShell/files/encrypt.cpp" "SeaShell/files/encrypt.hpp"
         "SeaShell/networking/clientsend.cpp" "SeaShell/networking/clientsend.hpp"
         "SeaShell/files/filesystem.cpp" "SeaShell/files/filesystem.hpp"
-        "SeaShell/color.cpp" "SeaShell/color.hpp"
         "SeaShell/help.cpp" "SeaShell/help.hpp"
         "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
         "SeaShell/files/zip.cpp" "SeaShell/files/zip.hpp"
@@ -76,15 +77,17 @@ set(POCO_LIBS
         Poco::Redis
 )
 
-set(VistaLib "${USER_HOME}/CLionProjects/VistaFramework/cmake-build-release/VistaFramework.lib")
-set(PythonLib "${USER_HOME}/AppData/Local/Programs/Python/Python312/libs/python312.lib")
+#set(VistaLib "${USER_HOME}/CLionProjects/VistaFramework/cmake-build-release/VistaFramework.lib")
+set(PythonLib_DEBUG "${USER_HOME}/AppData/Local/Programs/Python/Python${PYTHON_VERSION_NO_DOT}/libs/python${PYTHON_VERSION_NO_DOT}_d.lib")
+set(PythonLib_RELEASE "${USER_HOME}/AppData/Local/Programs/Python/Python${PYTHON_VERSION_NO_DOT}/libs/python${PYTHON_VERSION_NO_DOT}.lib")
 
 target_link_libraries(SeaShell
         PUBLIC
         Ws2_32
-        ${PythonLib}
+        $<$<CONFIG:Debug>:${PythonLib_DEBUG}>
+        $<$<CONFIG:Release>:${PythonLib_RELEASE}>
         ${POCO_LIBS}
-        ${VistaLib}
+        #${VistaLib}
         CURL::libcurl
         OpenSSL::SSL
         OpenSSL::Crypto
