@@ -1,6 +1,6 @@
 #include "filesystem.hpp"
 
-string getHomeDirectory() {
+string GetHomeDirectory() {
 #if defined(_WIN32) || defined(_WIN64)
     return std::getenv("USERPROFILE");
 #else
@@ -9,7 +9,7 @@ string getHomeDirectory() {
 }
 
 std::map<string, string> directories = {
-        {"home", getHomeDirectory()},
+        {"home", GetHomeDirectory()},
 };
 
 void ChangeDirectory(Arguments args, Options options) {
@@ -235,7 +235,6 @@ void FileCopy(Arguments args, Options options) {
 }
 
 void FindFiles(Arguments args, Options options){
-
     string currentDirectory = std::filesystem::current_path().string();
     const string& pattern = args[0];
     std::regex regex_pattern(pattern);

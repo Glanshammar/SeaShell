@@ -1,6 +1,6 @@
 #include "zip.hpp"
 
-void addDirectoryToZip(Compress& zipper, const string& dirPath, const string& currentPath) {
+void AddDirectoryToZip(Compress& zipper, const string& dirPath, const string& currentPath) {
     Poco::DirectoryIterator it(dirPath);
     Poco::DirectoryIterator end;
 
@@ -10,7 +10,7 @@ void addDirectoryToZip(Compress& zipper, const string& dirPath, const string& cu
 
         if (it->isDirectory()) {
             // Recursively add subdirectories
-            addDirectoryToZip(zipper, it.path().toString(), relativePath);
+            AddDirectoryToZip(zipper, it.path().toString(), relativePath);
         } else {
             // Add file to the ZIP archive
             zipper.addFile(filePath, relativePath);
@@ -37,7 +37,7 @@ void ZIP(Arguments args, Options options) {
         Poco::File sourceFile(source);
         if (sourceFile.isDirectory()) {
             // If the source is a directory, add all its contents recursively
-            addDirectoryToZip(zipper, source, "");
+            AddDirectoryToZip(zipper, source, "");
         } else {
             // If the source is a file, add it directly
             Path file(source);
