@@ -18,6 +18,7 @@
 #include <filesystem>
 #include <fstream>
 #include <cstdlib>
+#include <codecvt>
 
 
 // auto ptr = UniquePtr<int>(5);
@@ -37,3 +38,22 @@ using std::cin;
 
 void UniquePointerTest();
 
+inline bool isNumeric(const std::string& str) {
+    return std::ranges::all_of(str, ::isdigit);
+}
+
+inline std::wstring StringToWString(const std::string& str) {
+    std::wstring wstr(str.begin(), str.end());
+    return wstr;
+}
+
+inline void OpenURL(const std::string& url) {
+#ifdef _WIN32
+    std::string command = "start " + url; // Windows
+#elif __APPLE__
+    std::string command = "open " + url; // macOS
+#else
+    std::string command = "xdg-open " + url; // Linux
+#endif
+    system(command.c_str());
+}
