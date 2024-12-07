@@ -5,7 +5,6 @@
 
 std::map<std::string, std::function<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
     {"help", PrintHelp},
-    {"exec", ExecuteFile},
     {"py", RunPythonScript},
     {"cd", ChangeDirectory},
     {"ls", ListDirectoryContents},

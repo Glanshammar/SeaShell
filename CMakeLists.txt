@@ -56,7 +56,6 @@ find_package(Poco REQUIRED COMPONENTS
 add_executable(SeaShell
         "SeaShell/global.cpp" "SeaShell/global.hpp"
         "SeaShell/seashell.cpp" "SeaShell/functions.hpp"
-        "SeaShell/files/execute.cpp" "SeaShell/files/execute.hpp"
         "SeaShell/files/python.cpp" "SeaShell/files/python.hpp"
         "SeaShell/files/encrypt.cpp" "SeaShell/files/encrypt.hpp"
         "SeaShell/networking/clientsend.cpp" "SeaShell/networking/clientsend.hpp"
