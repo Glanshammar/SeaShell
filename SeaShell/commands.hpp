@@ -3,7 +3,7 @@
 #include <global.hpp>
 #include <functions.hpp>
 
-std::map<std::string, std::function<void(const std::vector<std::string>& args, const std::vector<std::string>& options)>> functionMap = {
+inline std::map<std::string, std::function<void(Arguments arguments, Options options)>> functionMap = {
     {"help", PrintHelp},
     {"py", RunPythonScript},
     {"cd", ChangeDirectory},
@@ -18,4 +18,6 @@ std::map<std::string, std::function<void(const std::vector<std::string>& args, c
     {"zip", ZIP},
     {"unzip", UnZIP},
     {"find", FindFiles},
+    {"list", ListProcesses},
+    {"kill", KillProcess},
 };
