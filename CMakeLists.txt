@@ -28,6 +28,7 @@ link_directories("${VCPKG_DIR}/installed/x64-windows/debug/lib")
 include_directories(
         #"${USER_HOME}/CLionProjects/VistaFramework/Vista/include/Vista" #Vista Include
         "${USER_HOME}/AppData/Local/Programs/Python/Python${PYTHON_VERSION_NO_DOT}/include" #Python Include
+        "${PROJECT_ROOT}/SeaShell"
 )
 
 if(WIN32)
@@ -63,6 +64,8 @@ add_executable(SeaShell
         "SeaShell/help.cpp" "SeaShell/help.hpp"
         "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
         "SeaShell/files/zip.cpp" "SeaShell/files/zip.hpp"
+        "SeaShell/system/process.cpp" "SeaShell/system/process.hpp"
+        "SeaShell/commands.hpp"
 )
 
 set(POCO_LIBS
