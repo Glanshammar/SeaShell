@@ -35,3 +35,5 @@
 cmake-build-debug
 cmake-build-release
 .idea
+build
+vcpkg_installed
