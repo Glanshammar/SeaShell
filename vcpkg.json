@@ -1,0 +1,11 @@
+{
+  "name": "seashell",
+  "version": "0.3",
+  "dependencies": [
+    "fmt",
+    "curl",
+    "openssl",
+    "libssh2",
+    "poco"
+  ]
+}
