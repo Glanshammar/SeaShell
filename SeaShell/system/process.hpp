@@ -5,7 +5,12 @@
 #include <Poco/Pipe.h>
 #include <Poco/PipeStream.h>
 #include <Poco/StreamCopier.h>
-#include <tlhelp32.h>
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#else
+#include <sys/types.h>
+#include <signal.h>
+#endif
 #include <global.hpp>
 
 using namespace Poco;

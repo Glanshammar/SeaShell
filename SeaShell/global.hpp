@@ -19,6 +19,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <codecvt>
+#include <algorithm>
 
 
 // auto ptr = UniquePtr<int>(5);
@@ -39,7 +40,7 @@ using std::cin;
 void UniquePointerTest();
 
 inline bool isNumeric(const std::string& str) {
-    return std::ranges::all_of(str, ::isdigit);
+    return std::all_of(str.begin(), str.end(), ::isdigit);
 }
 
 inline std::wstring StringToWString(const std::string& str) {
