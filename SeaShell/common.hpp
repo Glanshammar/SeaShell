@@ -19,4 +19,4 @@ using std::endl;
 using std::flush;
 using std::ofstream;
 using std::ifstream;
-using std::stringstream; 
+using std::stringstream;
