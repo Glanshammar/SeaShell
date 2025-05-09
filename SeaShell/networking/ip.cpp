@@ -1,31 +1,32 @@
+#include "../common.hpp"
 #include "ip.hpp"
 
 void PrintInterface(const Poco::Net::NetworkInterface& networkInterface) {
-    cout << "Interface: " << std::flush;
-    cout << networkInterface.name() << std::endl;
+    cout << "Interface: " << flush;
+    cout << networkInterface.name() << endl;
 
-    cout << "  Display Name: " << std::flush;
-    cout << networkInterface.displayName() << std::endl;
+    cout << "  Display Name: " << flush;
+    cout << networkInterface.displayName() << endl;
 
-    cout << "  MAC Address: " << std::flush;
-    cout << networkInterface.macAddress() << std::endl;
+    cout << "  MAC Address: " << flush;
+    cout << networkInterface.macAddress() << endl;
 
     for (const auto& address : networkInterface.addressList()) {
         const auto& ipAddress = address.get<0>();
         const auto& netmask = address.get<1>();
         const auto& broadcastAddress = address.get<2>();
 
-        cout << "  IP Address: " << std::flush;
-        cout << ipAddress.toString() << std::endl;
+        cout << "  IP Address: " << flush;
+        cout << ipAddress.toString() << endl;
 
-        cout << "  Netmask: " << std::flush;
-        cout << netmask.toString() << std::endl;
+        cout << "  Netmask: " << flush;
+        cout << netmask.toString() << endl;
 
-        cout << "  Broadcast Address: " << std::flush;
-        cout << broadcastAddress.toString() << std::endl;
+        cout << "  Broadcast Address: " << flush;
+        cout << broadcastAddress.toString() << endl;
     }
 
-    cout << std::endl;
+    cout << endl;
 }
 
 void ListInterfaces(Arguments args, Options options) {
@@ -35,7 +36,7 @@ void ListInterfaces(Arguments args, Options options) {
             PrintInterface(networkInterface);
         }
     } catch (Poco::Exception& ex) {
-        std::cerr << "Error: " << ex.displayText() << std::endl;
+        cerr << "Error: " << ex.displayText() << endl;
         return;
     }
 }

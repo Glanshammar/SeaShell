@@ -6,22 +6,24 @@
 #include <filesystem>
 #include <numeric>
 
-std::string GetHomeDirectory() {
-    return std::getenv("HOME");
+namespace fs = std::filesystem;
+
+string GetHomeDirectory() {
+    return getenv("HOME");
 }
 
-void ChangeDirectory(Arguments args, [[maybe_unused]] Options options) {
+void ChangeDirectory(Arguments args, Options options) {
     if (args.empty()) {
-        std::cout << "No path provided." << std::endl;
+        cout << "No path provided." << endl;
         return;
     }
 
-    std::string path = std::accumulate(args.begin(), args.end(), std::string(),
-        [](const std::string& a, const std::string& b) -> std::string {
+    string path = std::accumulate(args.begin(), args.end(), string(),
+        [](const string& a, const string& b) -> string {
             return a.empty() ? b : a + " " + b;
         });
 
-    std::map<std::string, std::string> directories = {
+    map<string, string> directories = {
         {"~", GetHomeDirectory()},
         {"home", GetHomeDirectory()}
     };
@@ -31,41 +33,41 @@ void ChangeDirectory(Arguments args, [[maybe_unused]] Options options) {
     }
 
     try {
-        std::filesystem::current_path(path);
-    } catch (const std::filesystem::filesystem_error& e) {
-        std::cout << "Error: " << e.what() << std::endl;
+        fs::current_path(path);
+    } catch (const fs::filesystem_error& e) {
+        cout << "Error: " << e.what() << endl;
     }
 }
 
-void ListDirectoryContents(Arguments args, [[maybe_unused]] Options options) {
+void ListDirectoryContents(Arguments args, Options options) {
     if (!args.empty() && args[0] == "--help") {
-        std::cout << "Usage: ls" << std::endl;
-        std::cout << "List directory contents." << std::endl;
-        std::cout << "Files has the color..." << std::endl;
-        std::cout << "Directories has the color..." << std::endl;
+        cout << "Usage: ls" << endl;
+        cout << "List directory contents." << endl;
+        cout << "Files has the color..." << endl;
+        cout << "Directories has the color..." << endl;
         return;
     }
 
     try {
-        std::string path = std::filesystem::current_path().string();
-        auto iterator = std::filesystem::directory_iterator(path);
+        std::string path = fs::current_path().string();
+        auto iterator = fs::directory_iterator(path);
 
-        if (iterator == std::filesystem::end(iterator)) {
-            std::cout << "The directory is empty." << std::endl;
+        if (iterator == fs::end(iterator)) {
+            cout << "The directory is empty." << endl;
             return;
         }
 
         for (const auto& entry : iterator) {
-            std::cout << entry.path().filename().string() << std::endl;
+            cout << entry.path().filename().string() << endl;
         }
-    } catch (const std::filesystem::filesystem_error& e) {
-        std::cout << "Error: " << e.what() << std::endl;
+    } catch (const fs::filesystem_error& e) {
+        cout << "Error: " << e.what() << endl;
     }
 }
 
 void CreateFolder(Arguments args, Options options) {
     if (args.empty()) {
-        cout << "No folder path provided." << std::endl;
+        cout << "No folder path provided." << endl;
         return;
     }
 
@@ -78,23 +80,23 @@ void CreateFolder(Arguments args, Options options) {
     }
 
     try {
-        if (std::filesystem::create_directory(path)) {
+        if (fs::create_directory(path)) {
             //Print(Color::GREEN, "Directory created successfully: ", Color::DEFAULT, path);
-            cout << "Created directory " << path << std::endl;
+            cout << "Created directory " << path << endl;
         } else {
             //Print(Color::RED, "Failed to create directory: ", Color::DEFAULT, path);
-            cout << "Failed to create directory " << path << std::endl;
+            cout << "Failed to create directory " << path << endl;
         }
-    } catch (const std::filesystem::filesystem_error &e) {
+    } catch (const fs::filesystem_error &e) {
         //Print(Color::RED, "Error creating directory: ", e.what());
-        cout << e.what() << std::endl;
+        cout << "Error creating directory: " << e.what() << endl;
     }
 }
 
 void AddFile(Arguments args, Options options) {
     if (args.empty()) {
         //Print(Color::RED, "No file path provided.");
-        cout << "No file path provided." << std::endl;
+        cout << "No file path provided." << endl;
         return;
     }
 
@@ -108,12 +110,12 @@ void AddFile(Arguments args, Options options) {
     }
 
     // Check if the directory exists, if not, create it
-    std::filesystem::path file_path(path);
-    std::filesystem::path dir = file_path.parent_path();
+    fs::path file_path(path);
+    fs::path dir = file_path.parent_path();
 
     try {
-        if (!dir.empty() && !std::filesystem::exists(dir)) {
-            std::filesystem::create_directories(dir);
+        if (!dir.empty() && !fs::exists(dir)) {
+            fs::create_directories(dir);
         }
 
         // Create and open the file
@@ -129,7 +131,7 @@ void AddFile(Arguments args, Options options) {
             //setColor(Color::WHITE);
             std::cerr << path << std::endl;
         }
-    } catch (const std::filesystem::filesystem_error &e) {
+    } catch (const fs::filesystem_error &e) {
         std::cerr << "Error creating file: " << e.what() << std::endl;
     }
 }
@@ -150,12 +152,12 @@ void RemoveFile(Arguments args, Options options) {
     }
 
     try {
-        if (std::filesystem::remove(path)) {
+        if (fs::remove(path)) {
             cout << "File removed successfully: " << path << std::endl;
         } else {
             cout << "Failed to remove file or file does not exist: " << path << std::endl;
         }
-    } catch (const std::filesystem::filesystem_error &e) {
+    } catch (const fs::filesystem_error &e) {
         std::cerr << "Error removing file: " << e.what() << std::endl;
     }
 }
@@ -176,12 +178,12 @@ void RemoveFolder(Arguments args, Options options) {
     }
 
     try {
-        if (std::filesystem::remove_all(path)) {
+        if (fs::remove_all(path)) {
             cout << "Folder and its contents removed successfully: " << path << std::endl;
         } else {
             cout << "Failed to remove folder or folder does not exist: " << path << std::endl;
         }
-    } catch (const std::filesystem::filesystem_error &e) {
+    } catch (const fs::filesystem_error &e) {
         std::cerr << "Error removing folder: " << e.what() << std::endl;
     }
 }
@@ -196,10 +198,10 @@ void FileMove(Arguments args, Options options) {
     const string& destination = args[1];
 
     try {
-        std::filesystem::copy(source, destination, std::filesystem::copy_options::overwrite_existing);
-        std::filesystem::remove(source);
+        fs::copy(source, destination, fs::copy_options::overwrite_existing);
+        fs::remove(source);
         cout << "File moved successfully." << std::endl;
-    } catch (std::filesystem::filesystem_error& e) {
+    } catch (fs::filesystem_error& e) {
         std::cerr << "Error moving file: " << e.what() << std::endl;
     }
 }
@@ -214,32 +216,32 @@ void FileCopy(Arguments args, Options options) {
     const string& destination = args[1];
 
     try {
-        std::filesystem::copy(source, destination, std::filesystem::copy_options::overwrite_existing);
+        fs::copy(source, destination, fs::copy_options::overwrite_existing);
         cout << "File copied successfully." << std::endl;
-    } catch (std::filesystem::filesystem_error& e) {
+    } catch (fs::filesystem_error& e) {
         std::cerr << "Error copying file: " << e.what() << std::endl;
     }
 }
 
 void FindFiles(Arguments args, Options options){
-    string currentDirectory = std::filesystem::current_path().string();
+    string currentDirectory = fs::current_path().string();
     const string& pattern = args[0];
     std::regex regex_pattern(pattern);
 
     try {
-        for (const auto& entry : std::filesystem::recursive_directory_iterator(currentDirectory, std::filesystem::directory_options::skip_permission_denied)) {
+        for (const auto& entry : fs::recursive_directory_iterator(currentDirectory, fs::directory_options::skip_permission_denied)) {
             try {
-                if (std::filesystem::is_regular_file(entry.status()) && std::regex_search(entry.path().string(), regex_pattern)) {
+                if (fs::is_regular_file(entry.status()) && std::regex_search(entry.path().string(), regex_pattern)) {
                     std::cout << entry.path() << std::endl;
                 }
-            } catch (const std::filesystem::filesystem_error& e) {
+            } catch (const fs::filesystem_error& e) {
                 continue;
             } catch (const std::regex_error& e) {
                 std::cerr << "Regex error: " << e.what() << std::endl;
                 return;
             }
         }
-    } catch (const std::filesystem::filesystem_error& e) {
+    } catch (const fs::filesystem_error& e) {
         std::cerr << "Filesystem error: " << e.what() << std::endl;
         return;
     }
