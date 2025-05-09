@@ -1,5 +1,9 @@
 #pragma once
 
+#include "../common.hpp"
+#include "../types.hpp"
+#include "../utils.hpp"
+
 #include <Poco/Process.h>
 #include <Poco/Exception.h>
 #include <Poco/Pipe.h>
@@ -11,9 +15,13 @@
 #include <sys/types.h>
 #include <signal.h>
 #endif
-#include "../types.hpp"
 
 using namespace Poco;
+using Poco::Process;
+using Poco::ProcessHandle;
+using Poco::Pipe;
+using Poco::PipeInputStream;
+using Poco::StreamCopier;
 
 void KillProcess(Arguments args, Options options);
 void ListProcesses(Arguments args, Options options);

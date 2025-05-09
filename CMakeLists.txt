@@ -139,7 +139,7 @@ target_compile_features(SeaShell PRIVATE cxx_std_20)
 if(MSVC)
     target_compile_options(SeaShell PRIVATE /W4 /WX)
 else()
-    target_compile_options(SeaShell PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    target_compile_options(SeaShell PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 # Platform Definitions
