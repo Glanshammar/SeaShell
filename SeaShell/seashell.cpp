@@ -1,6 +1,5 @@
 #include "common.hpp"
-#include "commands/registry.hpp"
-#include "commands/help_command.hpp"
+#include "commands.hpp"
 #include "utils.hpp"
 #include <iostream>
 #include <string>
@@ -31,12 +30,6 @@ vector<string> extractOptions(vector<string>& tokens) {
 }
 
 int main() {
-    auto& registry = CommandRegistry::getInstance();
-    
-    // Register all commands
-    registry.registerCommand(std::make_unique<HelpCommand>());
-    // TODO: Register other commands here
-    
     string input;
     while (true) {
         cout << getCurrentDirectory() << " >> " << flush;
@@ -63,7 +56,12 @@ int main() {
         tokens.erase(tokens.begin());
         auto options = extractOptions(tokens);
 
-        if (!registry.executeCommand(command, tokens, options)) {
+        // Try to find the command in our function map
+        auto it = functionMap.find(command);
+        if (it != functionMap.end()) {
+            // Execute the command function
+            it->second(tokens, options);
+        } else {
             // If command not found, try system command
             system(input.c_str());
         }
