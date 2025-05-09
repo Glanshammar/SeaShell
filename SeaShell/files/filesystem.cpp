@@ -1,79 +1,66 @@
+#include "../utils.hpp"
 #include "filesystem.hpp"
+#include <iostream>
+#include <string>
+#include <map>
+#include <filesystem>
+#include <numeric>
 
-string GetHomeDirectory() {
-#if defined(_WIN32) || defined(_WIN64)
-    return std::getenv("USERPROFILE");
-#else
+std::string GetHomeDirectory() {
     return std::getenv("HOME");
-#endif
 }
 
-std::map<string, string> directories = {
-        {"home", GetHomeDirectory()},
-};
-
-void ChangeDirectory(Arguments args, Options options) {
+void ChangeDirectory(Arguments args, [[maybe_unused]] Options options) {
     if (args.empty()) {
-        cout << "No path provided." << std::endl;
+        std::cout << "No path provided." << std::endl;
         return;
     }
 
+    std::string path = std::accumulate(args.begin(), args.end(), std::string(),
+        [](const std::string& a, const std::string& b) -> std::string {
+            return a.empty() ? b : a + " " + b;
+        });
 
-    string path = std::accumulate(args.begin(), args.end(), string(),
-                                       [](const string& a, const string& b) -> string {
-                                           return a + (!a.empty() ? " " : "") + b;
-                                       });
+    std::map<std::string, std::string> directories = {
+        {"~", GetHomeDirectory()},
+        {"home", GetHomeDirectory()}
+    };
 
-    int result = -1;
-
-    auto it = directories.find(path);
-    if (it != directories.end()) {
-        result = ChangeDir(it->second.c_str());
-    } else {
-        result = ChangeDir(path.c_str());
+    if (directories.find(path) != directories.end()) {
+        path = directories[path];
     }
 
-    if (result != 0) {
-        perror("ChangeDir failed");
+    try {
+        std::filesystem::current_path(path);
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 }
 
-void ListDirectoryContents(Arguments args, Options options) {
-    if(!options.empty()){
-        if(options[0] == "-h"){
-            cout << "Usage: ls" << std::endl;
-            cout << "List directory contents." << std::endl;
-            cout << "Files has the color..." << std::endl;
-            cout << "Directories has the color..." << std::endl;
-            return;
-        }
+void ListDirectoryContents(Arguments args, [[maybe_unused]] Options options) {
+    if (!args.empty() && args[0] == "--help") {
+        std::cout << "Usage: ls" << std::endl;
+        std::cout << "List directory contents." << std::endl;
+        std::cout << "Files has the color..." << std::endl;
+        std::cout << "Directories has the color..." << std::endl;
+        return;
     }
-    try {
-        string path = std::filesystem::current_path().string();
 
+    try {
+        std::string path = std::filesystem::current_path().string();
         auto iterator = std::filesystem::directory_iterator(path);
 
         if (iterator == std::filesystem::end(iterator)) {
-            cout << "The directory is empty." << std::endl;
+            std::cout << "The directory is empty." << std::endl;
             return;
         }
 
-        for (const auto &entry : iterator) {
-            /*
-            if (std::filesystem::is_directory(entry.status())) {
-                setColor(Color::GREEN);
-            } else if (std::filesystem::is_regular_file(entry.status())) {
-                setColor(Color::YELLOW);
-            }
-            */
-            cout << entry.path().filename().string() << std::endl;
+        for (const auto& entry : iterator) {
+            std::cout << entry.path().filename().string() << std::endl;
         }
-    } catch (const std::filesystem::filesystem_error &e) {
-        // Print(Color::RED, "Error accessing directory: ", e.what());
-        cout << e.what() << std::endl;
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
-
-    // setColor(Color::DEFAULT);
 }
 
 void CreateFolder(Arguments args, Options options) {
