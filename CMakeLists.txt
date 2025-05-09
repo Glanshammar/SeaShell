@@ -60,6 +60,11 @@ if(NOT Python3_FOUND)
     find_package(Python3 COMPONENTS Development REQUIRED)
 endif()
 
+if(Python3_FOUND)
+    message(STATUS "Python found: ${Python3_VERSION}")
+    add_compile_definitions(HAS_PYTHON)
+endif()
+
 # Handle MySQL
 if(USE_MYSQL)
     set(MYSQL_VERSION "9.1")
@@ -110,17 +115,21 @@ endif()
 
 # Target Definition
 add_executable(SeaShell
-    "SeaShell/global.cpp" "SeaShell/global.hpp"
-    "SeaShell/seashell.cpp" "SeaShell/functions.hpp"
-    "SeaShell/files/python.cpp" "SeaShell/files/python.hpp"
-    "SeaShell/files/encrypt.cpp" "SeaShell/files/encrypt.hpp"
-    "SeaShell/networking/clientsend.cpp" "SeaShell/networking/clientsend.hpp"
+    "SeaShell/common.hpp"
+    "SeaShell/seashell.cpp"
+    "SeaShell/types.hpp"
+    "SeaShell/utils.hpp"
+    "SeaShell/platform.hpp"
+    "SeaShell/commands.hpp"
+    "SeaShell/commands/registry.hpp"
+    "SeaShell/commands/help_command.hpp"
+    "SeaShell/commands/ls_command.hpp"
     "SeaShell/files/filesystem.cpp" "SeaShell/files/filesystem.hpp"
-    "SeaShell/help.cpp" "SeaShell/help.hpp"
     "SeaShell/networking/ip.cpp" "SeaShell/networking/ip.hpp"
     "SeaShell/files/zip.cpp" "SeaShell/files/zip.hpp"
     "SeaShell/system/process.cpp" "SeaShell/system/process.hpp"
-    "SeaShell/commands.hpp"
+    "SeaShell/files/python.cpp" "SeaShell/files/python.hpp"
+    "SeaShell/files/encrypt.cpp" "SeaShell/files/encrypt.hpp"
 )
 
 # Target Configuration
@@ -138,11 +147,23 @@ target_compile_definitions(SeaShell PRIVATE
     $<$<PLATFORM_ID:Windows>:WINDOWS>
     $<$<PLATFORM_ID:Linux>:LINUX>
     $<$<PLATFORM_ID:Darwin>:MACOS>
+    $<$<PLATFORM_ID:Windows>:WIN32_LEAN_AND_MEAN>
+    CURL_STATICLIB
+    POCO_CMAKE
+    POCO_ENABLE_CPP11
+    POCO_ENABLE_CPP14
+    POCO_HAVE_FD_EPOLL
+    POCO_OS_FAMILY_UNIX
+    POCO_STATIC
+    POCO_UNBUNDLED
+    SQLParser_EXPORTS
+    UTF8PROC_STATIC
+    _DEBUG
+    _FILE_OFFSET_BITS=64
+    _LARGEFILE64_SOURCE
+    _REENTRANT
+    _THREAD_SAFE
 )
-
-if(WIN32)
-    target_compile_definitions(SeaShell PRIVATE WIN32_LEAN_AND_MEAN)
-endif()
 
 # Include Directories
 target_include_directories(SeaShell PRIVATE "${PROJECT_ROOT}/SeaShell")
@@ -194,6 +215,7 @@ target_link_libraries(SeaShell PRIVATE
     OpenSSL::Crypto
     Libssh2::libssh2
     fmt::fmt
+    stdc++fs
 )
 
 if(Python3_FOUND)
