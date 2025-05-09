@@ -1,6 +1,22 @@
+# Basic Project Setup
 cmake_minimum_required(VERSION 3.21)
 project("SeaShell" VERSION 0.3)
 
+# Build Configuration
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
+endif()
+
+# Set C++ standard using modern approach
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Project Options
+option(USE_MYSQL "Enable MySQL support" OFF)
+option(CMAKE_VERBOSE_MAKEFILE "Generate verbose makefiles" ON)
+
+# Platform Detection and Variables
 if(WIN32)
     set(USER_HOME $ENV{USERPROFILE})
 elseif(UNIX)
@@ -11,18 +27,15 @@ if(NOT USER_HOME)
     message(FATAL_ERROR "Could not determine the user's home directory")
 endif()
 
-# Set C++ standard using modern approach
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-# Project options
-option(USE_MYSQL "Enable MySQL support" OFF)
-option(CMAKE_VERBOSE_MAKEFILE "Generate verbose makefiles" ON)
-
+# Project Variables
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+# Dependency Management
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
+
+# Find Required Packages
 find_package(fmt CONFIG REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(OpenSSL CONFIG REQUIRED)
@@ -39,7 +52,7 @@ find_package(Poco CONFIG COMPONENTS
     Redis
 )
 
-# Find Python using proper CMake module
+# Find Python
 set(PYTHON_VERSION "3.13")
 find_package(Python3 ${PYTHON_VERSION} COMPONENTS Development QUIET)
 if(NOT Python3_FOUND)
@@ -47,14 +60,11 @@ if(NOT Python3_FOUND)
     find_package(Python3 COMPONENTS Development REQUIRED)
 endif()
 
-# Handle MySQL properly across platforms
+# Handle MySQL
 if(USE_MYSQL)
     set(MYSQL_VERSION "9.1")
-    
-    # Try to find MySQL using FindMySQL.cmake module
     find_package(MySQL QUIET)
     
-    # If not found, try platform-specific manual locations
     if(NOT MYSQL_FOUND)
         if(WIN32)
             set(MYSQL_LIB_PATH "C:/Program Files/MySQL/MySQL Server ${MYSQL_VERSION}/lib/mysqlclient.lib")
@@ -69,7 +79,6 @@ if(USE_MYSQL)
                 message(WARNING "MySQL library not found at ${MYSQL_LIB_PATH}")
             endif()
         elseif(APPLE)
-            # macOS often has MySQL installed via Homebrew
             find_library(MYSQL_LIBRARIES NAMES mysqlclient
                 PATHS /usr/local/mysql/lib /usr/local/lib/mysql /opt/homebrew/lib
                 PATH_SUFFIXES mysql)
@@ -77,7 +86,6 @@ if(USE_MYSQL)
                 PATHS /usr/local/mysql/include /usr/local/include/mysql /opt/homebrew/include
                 PATH_SUFFIXES mysql)
         elseif(UNIX)
-            # Linux standard locations
             find_library(MYSQL_LIBRARIES NAMES mysqlclient mariadbclient
                 PATHS /usr/lib /usr/lib/mysql /usr/local/lib /usr/local/lib/mysql
                 PATH_SUFFIXES mysql)
@@ -95,12 +103,12 @@ if(USE_MYSQL)
     endif()
 endif()
 
-# Define Windows SDK version with auto-detection fallback
+# Windows SDK Configuration
 if(WIN32)
     set(WINDOWS_SDK_VERSION "10.0.22621.0" CACHE STRING "Windows SDK version")
 endif()
 
-# Define the executable with all source files
+# Target Definition
 add_executable(SeaShell
     "SeaShell/global.cpp" "SeaShell/global.hpp"
     "SeaShell/seashell.cpp" "SeaShell/functions.hpp"
@@ -115,20 +123,39 @@ add_executable(SeaShell
     "SeaShell/commands.hpp"
 )
 
-# Use modern CMake for setting C++ standard
+# Target Configuration
 target_compile_features(SeaShell PRIVATE cxx_std_20)
 
-# Include directories specific to the target
+# Compiler Options
+if(MSVC)
+    target_compile_options(SeaShell PRIVATE /W4 /WX)
+else()
+    target_compile_options(SeaShell PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+
+# Platform Definitions
+target_compile_definitions(SeaShell PRIVATE
+    $<$<PLATFORM_ID:Windows>:WINDOWS>
+    $<$<PLATFORM_ID:Linux>:LINUX>
+    $<$<PLATFORM_ID:Darwin>:MACOS>
+)
+
+if(WIN32)
+    target_compile_definitions(SeaShell PRIVATE WIN32_LEAN_AND_MEAN)
+endif()
+
+# Include Directories
 target_include_directories(SeaShell PRIVATE "${PROJECT_ROOT}/SeaShell")
 
-# Add Python include directories
 if(Python3_FOUND)
     target_include_directories(SeaShell PRIVATE ${Python3_INCLUDE_DIRS})
 endif()
 
-# Platform-specific includes and definitions
+if(MYSQL_FOUND)
+    target_include_directories(SeaShell PRIVATE ${MYSQL_INCLUDE_DIRS})
+endif()
+
 if(WIN32)
-    # Windows SDK includes with auto-detection
     if(DEFINED WINDOWS_SDK_VERSION)
         set(WIN_SDK_PATH "C:/Program Files (x86)/Windows Kits/10/Include/${WINDOWS_SDK_VERSION}/")
         if(IS_DIRECTORY "${WIN_SDK_PATH}")
@@ -144,16 +171,9 @@ if(WIN32)
             endif()
         endif()
     endif()
-    
-    target_compile_definitions(SeaShell PRIVATE WIN32_LEAN_AND_MEAN)
 endif()
 
-# MySQL includes
-if(MYSQL_FOUND)
-    target_include_directories(SeaShell PRIVATE ${MYSQL_INCLUDE_DIRS})
-endif()
-
-# Set up Poco libraries
+# Library Configuration
 set(POCO_LIBS
     Poco::Foundation
     Poco::Util
@@ -166,7 +186,7 @@ set(POCO_LIBS
     Poco::Redis
 )
 
-# Link libraries to SeaShell
+# Link Libraries
 target_link_libraries(SeaShell PRIVATE
     ${POCO_LIBS}
     CURL::libcurl
@@ -176,43 +196,47 @@ target_link_libraries(SeaShell PRIVATE
     fmt::fmt
 )
 
-# Python libraries - with debug/release variants if on Windows
 if(Python3_FOUND)
     if(WIN32)
-        # Python version without dots for library names
         string(REPLACE "." "" PYTHON_VERSION_NO_DOT ${Python3_VERSION})
-        
-        # Try to find the debug and release libraries
         set(PythonLib_DEBUG "${USER_HOME}/AppData/Local/Programs/Python/Python${PYTHON_VERSION_NO_DOT}/libs/python${PYTHON_VERSION_NO_DOT}_d.lib")
         set(PythonLib_RELEASE "${USER_HOME}/AppData/Local/Programs/Python/Python${PYTHON_VERSION_NO_DOT}/libs/python${PYTHON_VERSION_NO_DOT}.lib")
         
-        # Check if they exist and use them if they do
         if(EXISTS "${PythonLib_DEBUG}" AND EXISTS "${PythonLib_RELEASE}")
             target_link_libraries(SeaShell PRIVATE 
                 $<$<CONFIG:Debug>:${PythonLib_DEBUG}>
                 $<$<CONFIG:Release>:${PythonLib_RELEASE}>
             )
         else()
-            # Fall back to the detected Python libraries
             target_link_libraries(SeaShell PRIVATE ${Python3_LIBRARIES})
         endif()
     else()
-        # On other platforms, just use the detected Python libraries
         target_link_libraries(SeaShell PRIVATE ${Python3_LIBRARIES})
     endif()
 endif()
 
-# MySQL libraries
 if(MYSQL_FOUND)
     target_link_libraries(SeaShell PRIVATE ${MYSQL_LIBRARIES})
 endif()
 
-# Platform-specific libraries
 if(WIN32)
     target_link_libraries(SeaShell PRIVATE Ws2_32)
 endif()
 
-# Support for cross-compiling
+# Installation Rules
+install(TARGETS SeaShell
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+if(WIN32)
+    install(FILES $<TARGET_FILE:SeaShell> DESTINATION bin)
+elseif(UNIX)
+    install(TARGETS SeaShell DESTINATION bin)
+endif()
+
+# Cross-compilation Support
 if(CMAKE_CROSSCOMPILING)
     message(STATUS "Cross-compiling: Target system is ${CMAKE_SYSTEM_NAME}")
 endif()
