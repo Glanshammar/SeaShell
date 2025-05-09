@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #endif
-#include <global.hpp>
+#include "../types.hpp"
 
 using namespace Poco;
 

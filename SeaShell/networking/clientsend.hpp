@@ -1,4 +1,4 @@
 #pragma once
 
-#include "../global.hpp"
+#include "../types.hpp"
 void SendClient(Arguments args, Options options);

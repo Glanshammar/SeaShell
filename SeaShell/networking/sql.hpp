@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../global.hpp"
+#include "../types.hpp"
 #include "../files/filesystem.hpp"
 #ifdef USE_MYSQL
 #include "mysql.h"

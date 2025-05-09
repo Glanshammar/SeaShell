@@ -1,6 +1,6 @@
 #pragma once
 
 #include <Python.h>
-#include <global.hpp>
+#include "../types.hpp"
 
 void RunPythonScript(Arguments args, Options options);
