@@ -3,8 +3,6 @@
 #include "../types.hpp"
 #include <iostream>
 
-namespace commands {
-
 class HelpCommand : public Command {
 public:
     void execute(Arguments args, Options opts) override {
@@ -17,5 +15,3 @@ public:
     std::string getUsage() const override { return "help [command]"; }
     std::string getCategory() const override { return "system"; }
 };
-
-} // namespace commands 

@@ -1,6 +1,9 @@
 #pragma once
 
+#ifdef HAS_PYTHON
 #include "files/python.hpp"
+#endif
+
 #include "files/encrypt.hpp"
 #include "files/filesystem.hpp"
 #include "networking/ip.hpp"

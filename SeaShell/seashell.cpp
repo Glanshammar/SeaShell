@@ -1,3 +1,4 @@
+#include "common.hpp"
 #include "commands/registry.hpp"
 #include "commands/help_command.hpp"
 #include "utils.hpp"
@@ -5,8 +6,6 @@
 #include <string>
 #include <vector>
 #include <sstream>
-
-using namespace std;
 
 vector<string> splitInput(const string& input) {
     vector<string> tokens;
@@ -32,10 +31,10 @@ vector<string> extractOptions(vector<string>& tokens) {
 }
 
 int main() {
-    auto& registry = commands::CommandRegistry::getInstance();
+    auto& registry = CommandRegistry::getInstance();
     
     // Register all commands
-    registry.registerCommand(std::make_unique<commands::HelpCommand>());
+    registry.registerCommand(std::make_unique<HelpCommand>());
     // TODO: Register other commands here
     
     string input;

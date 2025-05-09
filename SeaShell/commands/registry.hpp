@@ -4,7 +4,6 @@
 #include <memory>
 #include <stdexcept>
 
-namespace commands {
 
 class CommandRegistry {
 public:
@@ -60,5 +59,3 @@ private:
 
     std::unordered_map<std::string, CommandPtr> registry_;
 };
-
-} // namespace commands 
