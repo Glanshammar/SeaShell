@@ -15,8 +15,11 @@ void RunPythonScript(Arguments args, Options options) {
         exit(1);
     }
 
-    Py_SetProgramName(program);
-    Py_Initialize();
+    PyConfig config;
+    PyConfig_InitPythonConfig(&config);
+    PyConfig_SetString(&config, &config.program_name, program);
+    Py_InitializeFromConfig(&config);
+    PyConfig_Clear(&config);
 
     std::string pyPath;
     if (scriptMap.find(args[0]) != scriptMap.end()) {
