@@ -2,8 +2,15 @@
 
 #define PY_SSIZE_T_CLEAN
 
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#else
+#include <sys/types.h>
+#include <signal.h>
+#endif
+
 std::map<string, string> scriptMap = {
-    {"test", "C:/Users/Mondus/Documents/script.py"},
+    {"test", std::filesystem::path(getenv("HOME")) / "Documents" / "script.py"},
 };
 
 
