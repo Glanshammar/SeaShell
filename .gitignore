@@ -37,3 +37,4 @@ cmake-build-release
 .idea
 build
 vcpkg_installed
+.cache
