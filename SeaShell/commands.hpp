@@ -61,10 +61,6 @@ inline std::map<std::string, CommandFunc> commands = {
     {"ps", ListProcesses}
 };
 
-// Helper to add a command to the map
-inline void addCommand(const std::string& name, CommandFunc func) {
-    commands[name] = func;
-}
 
 // Help command implementation
 inline void ShowHelp(const CommandArgs& args) {
