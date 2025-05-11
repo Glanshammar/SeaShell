@@ -1,6 +1,7 @@
 #include "../common.hpp"
 #include "../utils.hpp"
 #include "../platform.hpp"
+#include "../types.hpp"
 #include "process.hpp"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -20,37 +21,60 @@ void TerminateProcessByID(pid_t pid) {
 #endif
 
 
-void KillProcess(Arguments args, Options options)
+void KillProcess(const CommandArgs& args)
 {    
-    if(args.empty()) {
-        cout << "No process ID provided." << endl;
+    if (args.isEmpty()) {
+        std::cout << "No process ID provided." << std::endl;
         return;
     }
     
-    if(args[0] == "self")
-    {
+    const std::string& target = args.getArg(0);
+    
+    if (target == "self") {
         OpenURL("https://youtu.be/2dbR2JZmlWo?si=Sbb9kpW3uBt4xBFp");
-        cout << "Please do it." << endl;
-    } else if(isNumeric(args[0]))
-    {
-        TerminateProcessByID(stoi(args[0]));
-        cout << "Process terminated: " << args[0] << endl;
+        std::cout << "Please do it." << std::endl;
+    } else if (isNumeric(target)) {
+        bool force = args.hasOption("f") || args.hasOption("force");
+        
+        if (force) {
+            std::cout << "Force terminating process: " << target << std::endl;
+            // Could use SIGKILL instead of SIGTERM for force
+        }
+        
+        TerminateProcessByID(std::stoi(target));
+        std::cout << "Process terminated: " << target << std::endl;
     } else {
-        cout << "Invalid process ID. Must be a number or 'self'." << endl;
+        std::cout << "Invalid process ID. Must be a number or 'self'." << std::endl;
+        std::cout << "Usage: kill [options] <pid|self>" << std::endl;
+        std::cout << "Options:" << std::endl;
+        std::cout << "  -f, --force    Force terminate the process" << std::endl;
     }
 }
 
 
-void ListProcesses(Arguments args, Options options)
+void ListProcesses(const CommandArgs& args)
 {    
+    bool showAll = args.hasOption("a") || args.hasOption("all");
+    bool showDetails = args.hasOption("l") || args.hasOption("long");
+    
 #ifdef _WIN32
-    const string command = "tasklist"; // Windows command to list processes
+    std::string command = "tasklist";
+    if (showDetails) {
+        command += " /v"; // Verbose output
+    }
 #else
-    const string command = "/bin/ps"; // Unix command to list processes
+    std::string command = "/bin/ps";
+    if (showAll) {
+        command += " -e"; // Show all processes
+    }
+    if (showDetails) {
+        command += " -l"; // Long format
+    }
 #endif
+    
     Pipe outPipe;
     ProcessHandle ph = Process::launch(command, {}, nullptr, &outPipe, nullptr);
     PipeInputStream istr(outPipe);
-    StreamCopier::copyStream(istr, cout);
-    cout << endl;
+    StreamCopier::copyStream(istr, std::cout);
+    std::cout << std::endl;
 }

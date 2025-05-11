@@ -1,5 +1,6 @@
 #include "../utils.hpp"
 #include "filesystem.hpp"
+#include "../types.hpp"
 #include <iostream>
 #include <string>
 #include <map>
@@ -8,22 +9,31 @@
 
 namespace fs = std::filesystem;
 
-string GetHomeDirectory() {
+std::string GetHomeDirectory() {
     return getenv("HOME");
 }
 
-void ChangeDirectory(Arguments args, Options options) {
-    if (args.empty()) {
-        cout << "No path provided." << endl;
+void ChangeDirectory(const CommandArgs& args) {
+    if (args.isEmpty()) {
+        std::cout << "No path provided." << std::endl;
         return;
     }
 
-    string path = std::accumulate(args.begin(), args.end(), string(),
-        [](const string& a, const string& b) -> string {
-            return a.empty() ? b : a + " " + b;
-        });
+    // Get the target directory from arguments
+    std::string path;
+    
+    // If specific path given with --path option, use that
+    if (args.hasOption("path")) {
+        path = args.getOption("path");
+    } else {
+        // Otherwise, combine all positional arguments
+        path = std::accumulate(args.args.begin(), args.args.end(), std::string(),
+            [](const std::string& a, const std::string& b) -> std::string {
+                return a.empty() ? b : a + " " + b;
+            });
+    }
 
-    map<string, string> directories = {
+    std::map<std::string, std::string> directories = {
         {"~", GetHomeDirectory()},
         {"home", GetHomeDirectory()}
     };
@@ -34,13 +44,18 @@ void ChangeDirectory(Arguments args, Options options) {
 
     try {
         fs::current_path(path);
+        
+        // If verbose option set, show the new directory
+        if (args.hasOption("v") || args.hasOption("verbose")) {
+            std::cout << "Changed directory to: " << fs::current_path().string() << std::endl;
+        }
     } catch (const fs::filesystem_error& e) {
-        cout << "Error: " << e.what() << endl;
+        std::cout << "Error: " << e.what() << std::endl;
     }
 }
 
-void ListDirectoryContents(Arguments args, Options options) {
-    if (!args.empty() && args[0] == "--help") {
+void ListDirectoryContents(const CommandArgs& args) {
+    if (!args.isEmpty() && args.getArg(0) == "--help") {
         cout << "Usage: ls" << endl;
         cout << "List directory contents." << endl;
         cout << "Files has the color..." << endl;
@@ -65,18 +80,18 @@ void ListDirectoryContents(Arguments args, Options options) {
     }
 }
 
-void CreateFolder(Arguments args, Options options) {
-    if (args.empty()) {
+void CreateFolder(const CommandArgs& args) {
+    if (args.isEmpty()) {
         cout << "No folder path provided." << endl;
         return;
     }
 
     string path;
-    for (const auto& part : args) {
+    for (size_t i = 0; i < args.argCount(); ++i) {
         if (!path.empty()) {
             path += " ";
         }
-        path += part;
+        path += args.getArg(i);
     }
 
     try {
@@ -93,8 +108,8 @@ void CreateFolder(Arguments args, Options options) {
     }
 }
 
-void AddFile(Arguments args, Options options) {
-    if (args.empty()) {
+void AddFile(const CommandArgs& args) {
+    if (args.isEmpty()) {
         //Print(Color::RED, "No file path provided.");
         cout << "No file path provided." << endl;
         return;
@@ -102,11 +117,11 @@ void AddFile(Arguments args, Options options) {
 
     // Concatenate all parts of the path into a single string
     string path;
-    for (const auto& part : args) {
+    for (size_t i = 0; i < args.argCount(); ++i) {
         if (!path.empty()) {
             path += " ";
         }
-        path += part;
+        path += args.getArg(i);
     }
 
     // Check if the directory exists, if not, create it
@@ -136,19 +151,19 @@ void AddFile(Arguments args, Options options) {
     }
 }
 
-void RemoveFile(Arguments args, Options options) {
-    if (args.empty()) {
+void RemoveFile(const CommandArgs& args) {
+    if (args.isEmpty()) {
         cout << "No file path provided." << std::endl;
         return;
     }
 
     // Concatenate all parts of the path into a single string
     string path;
-    for (const auto& part : args) {
+    for (size_t i = 0; i < args.argCount(); ++i) {
         if (!path.empty()) {
             path += " ";
         }
-        path += part;
+        path += args.getArg(i);
     }
 
     try {
@@ -162,19 +177,19 @@ void RemoveFile(Arguments args, Options options) {
     }
 }
 
-void RemoveFolder(Arguments args, Options options) {
-    if (args.empty()) {
+void RemoveFolder(const CommandArgs& args) {
+    if (args.isEmpty()) {
         cout << "No folder path provided." << std::endl;
         return;
     }
 
     // Concatenate all parts of the path into a single string
     string path;
-    for (const auto& part : args) {
+    for (size_t i = 0; i < args.argCount(); ++i) {
         if (!path.empty()) {
             path += " ";
         }
-        path += part;
+        path += args.getArg(i);
     }
 
     try {
@@ -188,14 +203,14 @@ void RemoveFolder(Arguments args, Options options) {
     }
 }
 
-void FileMove(Arguments args, Options options) {
-    if (args.size() != 2) {
+void FileMove(const CommandArgs& args) {
+    if (args.argCount() != 2) {
         std::cerr << "Usage: mv <source> <destination>" << std::endl;
         return;
     }
 
-    const string& source = args[0];
-    const string& destination = args[1];
+    const string& source = args.getArg(0);
+    const string& destination = args.getArg(1);
 
     try {
         fs::copy(source, destination, fs::copy_options::overwrite_existing);
@@ -206,14 +221,14 @@ void FileMove(Arguments args, Options options) {
     }
 }
 
-void FileCopy(Arguments args, Options options) {
-    if (args.size() != 2) {
+void FileCopy(const CommandArgs& args) {
+    if (args.argCount() != 2) {
         std::cerr << "Usage: cp <source> <destination>" << std::endl;
         return;
     }
 
-    const string& source = args[0];
-    const string& destination = args[1];
+    const string& source = args.getArg(0);
+    const string& destination = args.getArg(1);
 
     try {
         fs::copy(source, destination, fs::copy_options::overwrite_existing);
@@ -223,9 +238,9 @@ void FileCopy(Arguments args, Options options) {
     }
 }
 
-void FindFiles(Arguments args, Options options){
+void FindFiles(const CommandArgs& args) {
     string currentDirectory = fs::current_path().string();
-    const string& pattern = args[0];
+    const string& pattern = args.getArg(0);
     std::regex regex_pattern(pattern);
 
     try {
