@@ -17,12 +17,12 @@
 #endif
 
 std::string getHomeDirectory();
-void ChangeDirectory(Arguments args, Options options);
-void ListDirectoryContents(Arguments args, Options options);
-void CreateFolder(Arguments args, Options options);
-void AddFile(Arguments args, Options options);
-void RemoveFile(Arguments args, Options options);
-void RemoveFolder(Arguments args, Options options);
-void FileCopy(Arguments args, Options options);
-void FileMove(Arguments args, Options options);
-void FindFiles(Arguments args, Options options);
+void ChangeDirectory(const CommandArgs& args);
+void ListDirectoryContents(const CommandArgs& args);
+void CreateFolder(const CommandArgs& args);
+void AddFile(const CommandArgs& args);
+void RemoveFile(const CommandArgs& args);
+void RemoveFolder(const CommandArgs& args);
+void FileCopy(const CommandArgs& args);
+void FileMove(const CommandArgs& args);
+void FindFiles(const CommandArgs& args);

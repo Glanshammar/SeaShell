@@ -2,5 +2,5 @@
 
 #include "../types.hpp"
 
-void EncryptFile(Arguments args, Options options);
-void DecryptFile(Arguments args, Options options);
+void EncryptFile(const CommandArgs& args);
+void DecryptFile(const CommandArgs& args);

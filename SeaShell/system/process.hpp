@@ -23,5 +23,5 @@ using Poco::Pipe;
 using Poco::PipeInputStream;
 using Poco::StreamCopier;
 
-void KillProcess(Arguments args, Options options);
-void ListProcesses(Arguments args, Options options);
+void KillProcess(const CommandArgs& args);
+void ListProcesses(const CommandArgs& args);

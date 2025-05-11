@@ -7,4 +7,4 @@
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Exception.h>
 
-void ListInterfaces(Arguments args, Options options);
+void ListInterfaces(const CommandArgs& args);

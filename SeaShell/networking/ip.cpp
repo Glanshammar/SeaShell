@@ -29,7 +29,7 @@ void PrintInterface(const Poco::Net::NetworkInterface& networkInterface) {
     cout << endl;
 }
 
-void ListInterfaces(Arguments args, Options options) {
+void ListInterfaces(const CommandArgs& args) {
     try {
         auto interfaces = Poco::Net::NetworkInterface::list();
         for (const auto& networkInterface : interfaces) {

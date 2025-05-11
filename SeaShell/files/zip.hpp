@@ -11,5 +11,5 @@
 using namespace Poco;
 using namespace Poco::Zip;
 
-void ZIP(Arguments args, Options options);
-void UnZIP(Arguments args, Options options);
+void ZIP(const CommandArgs& args);
+void UnZIP(const CommandArgs& args);

@@ -21,15 +21,15 @@ void AddDirectoryToZip(Compress& zipper, const std::string& dirPath, const std::
     }
 }
 
-void ZIP(Arguments args, Options options) {
-    if (args.size() != 2) {
+void ZIP(const CommandArgs& args) {
+    if (args.argCount() != 2) {
         std::cerr << "Usage: zip <input file/folder> <output file>" << std::endl;
         return;
     }
 
     try {
-        const std::string& source = args[0];
-        const std::string& target = args[1];
+        const std::string& source = args.getArg(0);
+        const std::string& target = args.getArg(1);
 
         std::ofstream out(target, std::ios::binary);
         if (!out) {
@@ -60,14 +60,14 @@ void ZIP(Arguments args, Options options) {
     }
 }
 
-void UnZIP(Arguments args, Options options){
-    if(args.size() != 2) {
+void UnZIP(const CommandArgs& args){
+    if(args.argCount() != 2) {
         std::cerr << "Usage: unzip <input file> <output directory>" << std::endl;
         return;
     }
 
-    const std::string& zipFilePath = args[0];
-    const std::string& extractDir = args[1];
+    const std::string& zipFilePath = args.getArg(0);
+    const std::string& extractDir = args.getArg(1);
 
     try {
         // Open an input stream for the ZIP file (must be binary)

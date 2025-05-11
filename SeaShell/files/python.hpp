@@ -9,4 +9,4 @@
 #include "../common.hpp"
 #include "../types.hpp"
 
-void RunPythonScript(Arguments args, Options options);
+void RunPythonScript(const CommandArgs& args);
