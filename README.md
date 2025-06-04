@@ -1,33 +1,71 @@
-# SeaShell: Enhancing the Command-Line Experience
-SeaShell is a console application, and it aims to enhance the command-line interface experience. While drawing inspiration from established shells, it's currently a work-in-progress, striving to integrate familiar functionalities with a sleek interface and formidable capabilities. Though not fully realized yet, SeaShell is on a path toward revolutionizing the command-line experience.
+# SeaShell
 
-# Features (Work-in-Progress)
-* **Cross-Platform Compatibility:** Works seamlessly across various operating systems.
-* **Sleek Interface:** A visually appealing shell enhancing user interaction.
-* **Powerful Scripting:** Empowers users to craft and execute robust scripts effortlessly.
-* **IDE:** An intuitive and simple IDE catering to both seasoned developers and newcomers.
-* **Terminal Emulator:** SeaShell aims to become a fully fledged terminal emulator with its own shell.
+SeaShell is a modular command-line interface application written in C++ that provides various utilities for file operations, networking, and system management.
 
-# Build Instructions
-The CMake file in this (root) directory is for building the project.
-Under the "Libraries" directory, there's another CMakeLists file for helping with the dependencies.
-Run the CMake file to build the whole project.
+## Architecture
+
+SeaShell uses a modular architecture with the following components:
+
+1. **Core Library (libseashell_core)**: Contains common functionality shared across all modules
+2. **Module Libraries**:
+   - **libseashell_files**: File operations (encryption, compression, file management)
+   - **libseashell_networking**: Network operations (interfaces, client/server)
+   - **libseashell_system**: System operations (process management)
+3. **Executables**:
+   - **seashell**: Main CLI application
+   - **seashell_files_exe**: File operations executable
+   - **seashell_net_exe**: Network operations executable
+   - **seashell_sys_exe**: System operations executable
+
+This modular approach allows:
+- Better separation of concerns
+- Improved maintainability
+- Ability to use modules independently
+- Easier extension with new modules
 
 ## Dependencies
-***Standalone Dependencies***
-* **CMake:** 3.28 or higher
-* **C++ Compiler:** GCC 14 (Linux), MSVC latest (Windows)
-* **MySQL:** 8.4 or higher (Optional, install Server community edition from https://dev.mysql.com/downloads/mysql/)
-* **Python 3.13**
 
-***vcpkg dependencies.***
-* **POCO 1.13.3**
-* **OpenSSL 3.4.0**
-* **curl 8.11.0**
-* **libssh-2 1.11**
+### System Requirements
+- **CMake:** 3.25 or higher
+- **C++ Compiler:** Clang 20 (Linux), MSVC latest (Windows)
+- **Python 3.13** (Optional, for Python script execution)
+- **MySQL:** 8.4 or higher (Optional, for database operations)
 
-# License
-Distributed under the MIT License. See LICENSE for more information.
+### Libraries (via vcpkg)
+- **POCO**
+- **OpenSSL**
+- **curl**
+- **libssh-2**
 
-# Contact
-For any inquiries or feedback, reach out to me at glanshammar70@gmail.com.
+## Building
+
+SeaShell uses CMake for building:
+
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
+
+## Usage
+
+The main CLI provides a unified interface to all modules:
+
+```bash
+# Use the main CLI
+./seashell
+
+# Use modules directly
+./seashell_files_exe encrypt myfile.txt
+./seashell_net_exe ifconfig
+./seashell_sys_exe ps
+```
+
+## License
+
+Distributed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any inquiries or feedback, reach out to glanshammar70@gmail.com.
