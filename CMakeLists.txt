@@ -15,6 +15,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Project Options
 option(USE_MYSQL "Enable MySQL support" OFF)
 option(CMAKE_VERBOSE_MAKEFILE "Generate verbose makefiles" ON)
+include_directories("/home/mondus/CppProjects/VistaFramework/Vista/include/Vista/")
 
 # Platform Detection and Variables
 if(WIN32)
@@ -241,6 +242,15 @@ endif()
 
 if(WIN32)
     target_link_libraries(SeaShell PRIVATE Ws2_32)
+endif()
+
+set(VISTA_FRAMEWORK_LIB "/home/mondus/CppProjects/VistaFramework/build/libVistaFramework.so")
+
+if(EXISTS "${VISTA_FRAMEWORK_LIB}")
+    target_link_libraries(SeaShell PRIVATE "${VISTA_FRAMEWORK_LIB}")
+    message(STATUS "Linked Vista Framework: ${VISTA_FRAMEWORK_LIB}")
+else()
+    message(WARNING "Library ${VISTA_FRAMEWORK_LIB} not found! SeaShell will not be linked against it.")
 endif()
 
 # Installation Rules
