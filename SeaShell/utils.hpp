@@ -14,6 +14,7 @@ namespace fs = std::filesystem;
     return std::wstring(str.begin(), str.end());
 }
 
-[[nodiscard]] inline string getCurrentDirectory() {
-    return fs::current_path().string();
-} 
+// Core utility functions
+[[nodiscard]] std::string getCurrentDirectory();
+void printError(const std::string& message);
+void printSuccess(const std::string& message); 

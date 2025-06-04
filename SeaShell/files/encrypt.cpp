@@ -17,7 +17,7 @@ void deriveKeyFromPassword(const string& passphrase, unsigned char* key, int key
     EVP_MD_CTX_free(mdctx);
     
     // Copy the hash to the key (truncate or zero-pad as needed)
-    memcpy(key, hash, keyLength < hashLen ? keyLength : hashLen);
+    memcpy(key, hash, static_cast<unsigned int>(keyLength) < hashLen ? static_cast<unsigned int>(keyLength) : hashLen);
 }
 
 // Encrypts data using AES-256-CBC

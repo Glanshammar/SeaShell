@@ -31,7 +31,6 @@ void SendClient(const CommandArgs& args);
 // Forward declarations for system operations
 void KillProcess(const CommandArgs& args);
 void ListProcesses(const CommandArgs& args);
-
 // Simple function type for commands
 using CommandFunc = void(*)(const CommandArgs&);
 

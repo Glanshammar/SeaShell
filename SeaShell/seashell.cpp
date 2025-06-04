@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <VString>
+#include <VConsole>
 
 std::vector<std::string> splitInput(const std::string& input) {
     std::vector<std::string> tokens;
@@ -61,7 +63,8 @@ CommandArgs parseCommandLine(const std::vector<std::string>& tokens) {
 int main() {
     std::string input;
     while (true) {
-        std::cout << getCurrentDirectory() << " >> " << std::flush;
+        VPrint("SeaShell");
+        VPrint(getCurrentDirectory() + " >> ");
 
         std::getline(std::cin, input);
         if (input.empty()) continue;
