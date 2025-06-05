@@ -261,3 +261,7 @@ void FindFiles(const CommandArgs& args) {
         return;
     }
 }
+
+std::string getCurrentDirectory() {
+    return fs::current_path().string();
+}
